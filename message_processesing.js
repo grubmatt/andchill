@@ -64,7 +64,7 @@ module.exports.handleMessage = function(sender_psid, received_message) {
 
 module.exports.handlePostback = function(sender_psid, received_postback) {
   console.log("Postback received");
-  let response, req_url;
+  let response;
   // Get the payload for the postback
   let payload = received_postback.payload,
       apikey = process.env.TICKETMASTER_APIKEY,
