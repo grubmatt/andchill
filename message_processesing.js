@@ -67,18 +67,18 @@ module.exports.handlePostback = function(sender_psid, received_postback) {
   let response, req_url;
   // Get the payload for the postback
   let payload = received_postback.payload,
-      apikey = process.env.TICKETMASTER_APIKEY;
+      apikey = process.env.TICKETMASTER_APIKEY,
+      req_url = "https://app.ticketmaster.com/discovery/v2/events.json?postalCode=15222&apikey="+apikey;
 
   // Set the request url based on the postback payload
   // API Ref: https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/
   if (payload === "concert") {
-    req_url = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&postalCode=15222&apikey="+apikey;
+    req_url += "classificationName=music";
   } else if (payload === "movie") {
-    req_url = "https://app.ticketmaster.com/discovery/v2/events.json?classificationName=film&postalCode=15222&apikey="+apikey;
+    req_url += "classificationName=film";
   } else if (payload === "random") {
     // Start Date    End Date    
-    //startDateTime=2017-10-23T12:00:00Z&endDateTime=2017-10-31T23:00:00Z
-    req_url = "https://app.ticketmaster.com/discovery/v2/events.json?postalCode=15222&apikey="+apikey;
+    //requrl == "startDateTime=2017-10-23T12:00:00Z&endDateTime=2017-10-31T23:00:00Z"
   }
 
   request({
