@@ -73,7 +73,7 @@ module.exports.handlePostback = function(sender_psid, received_postback) {
           let event = events["_embedded"]["events"][event_num];
           response = generateTMEventTemplate(event, payload);
         } else {
-          response = { "text": "Sorry we couldnt find any events within the week" };
+          response = { "text": "Sorry we couldnt find any events" };
         }
         callSendAPI(sender_psid, response);
       } else {
