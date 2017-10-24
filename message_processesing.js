@@ -5,56 +5,35 @@ module.exports.handleMessage = function(sender_psid, received_message) {
   let response;
   console.log("message received.");
 
-  if (received_message.quick_reply) {
-    if (received_message.quick_reply.payload === "yes") {
-      response = {
-        "attachment": {
-          "type": "template",
-          "payload": {
-            "template_type": "generic",
-            "elements": [{
-              "title": "What would you like to do?",
-              "subtitle": "Select an Option",
-              "buttons": [
-                {
-                  "type": "postback",
-                  "title": "See a Movie!",
-                  "payload": "movie",
-                },
-                {
-                  "type": "postback",
-                  "title": "Go to a Concert!",
-                  "payload": "concert",
-                },
-                {
-                  "type": "postback",
-                  "title": "Random Event!",
-                  "payload": "random",
-                }
-              ],
-            }]
-          }
+  if (received_message.text) {
+    response = {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          "elements": [{
+            "title": "What would you like to do?",
+            "subtitle": "Select an Option",
+            "buttons": [
+              {
+                "type": "postback",
+                "title": "See a Movie!",
+                "payload": "movie",
+              },
+              {
+                "type": "postback",
+                "title": "Go to a Concert!",
+                "payload": "concert",
+              },
+              {
+                "type": "postback",
+                "title": "Random Event!",
+                "payload": "random",
+              }
+            ],
+          }]
         }
       }
-    } else {
-      response = { "text": "How may I help you" };
-    }
-  } else if (received_message.text) {
-    // Create the payload for a basic text message, which
-    // will be added to the body of our request to the Send API
-    response = {
-      "text": 'Would you like to create a plan?',
-      "quick_replies":[
-      {
-        "content_type":"text",
-        "title":"Yes",
-        "payload":"yes"
-      },
-      {
-        "content_type":"text",
-        "title":"No",
-        "payload":"no"
-      }]
     }
   }
   
