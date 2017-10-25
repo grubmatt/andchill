@@ -66,8 +66,7 @@ module.exports.handlePostback = function(sender_psid, received_postback) {
     }, (err, res, body) => {
       if (!err) {
         var events = JSON.parse(body);
-        console.log("Number of Events: " + events["_embedded"]["events"].length);
-        if (events["_embedded"]["events"].length > 0) {
+        if (events["_embedded"] && events["_embedded"]["events"].length > 0) {
           console.log('ticketmaster requested!');
           let event_num = Math.floor(Math.random()*events["_embedded"]["events"].length)
           let event = events["_embedded"]["events"][event_num];
