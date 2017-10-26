@@ -119,8 +119,12 @@ function generateTMEventTemplate(events, payload) {
 
 function generateElementsJSON(events){
   let elements = [];
+  let maxEvents = 5;
+  if (events.length < 5) {
+    maxEvents = events.length;
+  }
 
-  for (var i = 0; i < 10; i++) {
+  for (var i = 0; i < maxEvents; i++) {
     let event  = events[i];
     elements.push({
       "title": event["name"],
