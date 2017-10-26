@@ -128,7 +128,7 @@ function generateElementsJSON(events){
     let event  = events[i];
     elements.push({
       "title": event["name"],
-      "subtitle": Click the picture to learn more!,
+      "subtitle": "Click the picture to learn more!",
       "image_url": event["images"][0]["url"],
       "default_action": {
         "type": "web_url",
