@@ -128,7 +128,7 @@ function generateElementsJSON(events){
     let event  = events[i];
     elements.push({
       "title": event["name"],
-      "subtitle": "How is this event?",
+      "subtitle": event["description"],
       "image_url": event["images"][0]["url"],
       "default_action": {
         "type": "web_url",
@@ -140,7 +140,7 @@ function generateElementsJSON(events){
         {
           "type":"web_url",
           "url": event["url"],
-          "title": "This is great"
+          "title": "Get Tickets"
         }
       ],
     })
