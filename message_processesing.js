@@ -68,9 +68,7 @@ module.exports.handlePostback = function(sender_psid, received_postback) {
         var events = JSON.parse(body);
         if (events["_embedded"] && events["_embedded"]["events"].length > 0) {
           console.log('ticketmaster requested!');
-          let event_num = Math.floor(Math.random()*events["_embedded"]["events"].length)
-          let event = events["_embedded"]["events"][event_num];
-          response = generateTMEventTemplate(event, payload);
+          response = generateTMEventTemplate(events["_embedded"]["events"], payload);
         } else {
           response = { "text": "Sorry we couldnt find any events" };
         }
@@ -105,37 +103,48 @@ function callSendAPI(sender_psid, response) {
   }); 
 }
 
-function generateTMEventTemplate(event, payload) {
+function generateTMEventTemplate(events, payload) {
   // Generates a Generic Template for a TicketMaster Event
+  elements = generateElementsJSON(events);
   return {
     "attachment": {
       "type": "template",
       "payload": {
         "template_type": "generic",
-        "elements": [{
-          "title": event["name"],
-          "subtitle": "How is this event?",
-          "image_url": event["images"][0]["url"],
-          "default_action": {
-            "type": "web_url",
-            "url": event["url"],
-            "messenger_extensions": false,
-            "webview_height_ratio": "compact"
-          },
-          "buttons": [
-            {
-              "type":"web_url",
-              "url": event["url"],
-              "title": "This is great"
-            },
-            {
-              "type": "postback",
-              "title": "Try another",
-              "payload": payload
-            }
-          ],
-        }]
+        "elements": elements
       }
     }
   }
+}
+
+function generateElementsJSON(events){
+  let elements = [];
+  let maxEvents = 5;
+  if (events.length < 5) {
+    maxEvents = events.length;
+  }
+
+  for (var i = 0; i < maxEvents; i++) {
+    let event  = events[i];
+    elements.push({
+      "title": event["name"],
+      "subtitle": "Click the picture to learn more!",
+      "image_url": event["images"][0]["url"],
+      "default_action": {
+        "type": "web_url",
+        "url": event["url"],
+        "messenger_extensions": false,
+        "webview_height_ratio": "compact"
+      },
+      "buttons": [
+        {
+          "type":"web_url",
+          "url": event["url"],
+          "title": "Get Tickets"
+        }
+      ],
+    })
+  }
+
+  return elements
 }
