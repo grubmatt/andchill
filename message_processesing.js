@@ -1,11 +1,12 @@
 const request = require('request');
-const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const PAGE_ACCESS_TOKEN = 'EAAZAEdDET8j0BAPqc5RzDKyTvHSNxUlZCmSDnzUWA7RzlxR688ZBkVZCuirZCF5hvhV4836r656TJQQingZAr89bMOGQHZA1La5C3G14fCVY4O5BNjxsU1JB6Kwa2lAdEcfOmJ58zxBI51dzx2b2vAcv7YrAsg9LYqi42mgah0grulrpjx1ra9i'//process.env.PAGE_ACCESS_TOKEN;
 
 module.exports.handleMessage = function(sender_psid, received_message) {
   let response;
   console.log("message received.");
 
   if (received_message.text) {
+    console.log("Asdfafa")
     response = {
       "attachment": {
         "type": "template",
@@ -23,12 +24,14 @@ module.exports.handleMessage = function(sender_psid, received_message) {
               {
                 "type": "postback",
                 "title": "Go to a Concert!",
-                "payload": "concert",
+                "payload": "concert"
               },
               {
-                "type": "postback",
+                "type": "web_url",
                 "title": "Random Event!",
-                "payload": "random",
+                "url": "https://348fc4ba.ngrok.io/random.html",
+                "webview_height_ratio": 'tall',
+                "messenger_extensions": true
               }
             ],
           }]
@@ -93,12 +96,16 @@ function callSendAPI(sender_psid, response) {
   // Send the HTTP request to the Messenger Platform
   request({
     "uri": "https://graph.facebook.com/v2.6/me/messages",
-    "qs": { "access_token": PAGE_ACCESS_TOKEN },
+    "qs": { "access_token": PAGE_ACCESS_TOKEN,
+            "whitelisted_domains":[
+            "https://348fc4ba.ngrok.io/random.html" 
+          ] 
+    },
     "method": "POST",
     "json": request_body
   }, (err, res, body) => {
     if (!err) {
-      console.log('message sent!')
+      console.log('message sent!');
     } else {
       console.error("Unable to send message:" + err);
     }
