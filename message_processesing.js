@@ -1,5 +1,5 @@
 const request = require('request');
-const PAGE_ACCESS_TOKEN = 'EAAZAEdDET8j0BAPqc5RzDKyTvHSNxUlZCmSDnzUWA7RzlxR688ZBkVZCuirZCF5hvhV4836r656TJQQingZAr89bMOGQHZA1La5C3G14fCVY4O5BNjxsU1JB6Kwa2lAdEcfOmJ58zxBI51dzx2b2vAcv7YrAsg9LYqi42mgah0grulrpjx1ra9i'//process.env.PAGE_ACCESS_TOKEN;
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 module.exports.handleMessage = function(sender_psid, received_message) {
   let response;
