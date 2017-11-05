@@ -6,6 +6,7 @@ module.exports.handleMessage = function(sender_psid, received_message) {
   console.log("message received.");
 
   if (received_message.text) {
+    console.log("Asdfafa")
     response = {
       "attachment": {
         "type": "template",
@@ -23,12 +24,14 @@ module.exports.handleMessage = function(sender_psid, received_message) {
               {
                 "type": "postback",
                 "title": "Go to a Concert!",
-                "payload": "concert",
+                "payload": "concert"
               },
               {
-                "type": "postback",
+                "type": "web_url",
                 "title": "Random Event!",
-                "payload": "random",
+                "url": "https://348fc4ba.ngrok.io/random.html",
+                "webview_height_ratio": 'tall',
+                "messenger_extensions": true
               }
             ],
           }]
@@ -91,12 +94,16 @@ function callSendAPI(sender_psid, response) {
   // Send the HTTP request to the Messenger Platform
   request({
     "uri": "https://graph.facebook.com/v2.6/me/messages",
-    "qs": { "access_token": PAGE_ACCESS_TOKEN },
+    "qs": { "access_token": PAGE_ACCESS_TOKEN,
+            "whitelisted_domains":[
+            "https://348fc4ba.ngrok.io/random.html" 
+          ] 
+    },
     "method": "POST",
     "json": request_body
   }, (err, res, body) => {
     if (!err) {
-      console.log('message sent!')
+      console.log('message sent!');
     } else {
       console.error("Unable to send message:" + err);
     }

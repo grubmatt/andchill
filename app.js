@@ -7,7 +7,9 @@ const
   app = express().use(body_parser.json()); // creates express http server
 
 // Sets server port and logs message on success
-app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
+app.listen(process.env.PORT || 5000, () => console.log('webhook is listening'));
+
+app.use(express.static(__dirname + '/public'));
 
 // Accepts POST requests at /webhook endpoint
 app.post('/webhook', (req, res) => {  
