@@ -3,9 +3,6 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 module.exports.handleMessage = function(sender_psid, received_message) {
   let response = "Error";
-  console.log("message received.");
-  console.log(received_message);
-  console.log(received_message.text);
 
   if (received_message.text) {
     response = {
@@ -31,7 +28,7 @@ module.exports.handleMessage = function(sender_psid, received_message) {
                 "type": "web_url",
                 "title": "Random Event!",
                 "url": "https://xandchill.herokuapp.com/random.html",
-                "webview_height_ratio": 'tall',
+                "webview_height_ratio": "tall",
                 "messenger_extensions": true
               }
             ],
@@ -99,7 +96,7 @@ function callSendAPI(sender_psid, response) {
     "uri": "https://graph.facebook.com/v2.6/me/messages",
     "qs": { "access_token": PAGE_ACCESS_TOKEN,
             "whitelisted_domains":[
-            "https://xandchill.herokuapp.com"
+            "https://xandchill.herokuapp.com/random.html"
           ] 
     },
     "method": "POST",
