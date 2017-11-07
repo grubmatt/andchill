@@ -40,6 +40,8 @@ module.exports.handleMessage = function(sender_psid, received_message) {
       }
     }
   }
+
+  console.log(response);
   
   // Send the response message
   callSendAPI(sender_psid, response);    
