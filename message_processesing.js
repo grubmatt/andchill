@@ -2,8 +2,10 @@ const request = require('request');
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 module.exports.handleMessage = function(sender_psid, received_message) {
-  let response;
+  let response = "Error";
   console.log("message received.");
+  console.log(received_message);
+  console.log(received_message.text);
 
   if (received_message.text) {
     response = {
