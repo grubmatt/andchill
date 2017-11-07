@@ -96,7 +96,7 @@ function callSendAPI(sender_psid, response) {
     "uri": "https://graph.facebook.com/v2.6/me/messages",
     "qs": { "access_token": PAGE_ACCESS_TOKEN,
             "whitelisted_domains":[
-            "https://xandchill.herokuapp.com/random.html"
+            "https://xandchill.herokuapp.com"
           ] 
     },
     "method": "POST",
