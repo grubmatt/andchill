@@ -6,7 +6,6 @@ module.exports.handleMessage = function(sender_psid, received_message) {
   console.log("message received.");
 
   if (received_message.text) {
-    console.log("Asdfafa")
     response = {
       "attachment": {
         "type": "template",
@@ -29,7 +28,7 @@ module.exports.handleMessage = function(sender_psid, received_message) {
               {
                 "type": "web_url",
                 "title": "Random Event!",
-                "url": "https://348fc4ba.ngrok.io/random.html",
+                "url": "https://xandchill.herokuapp.com/random.html",
                 "webview_height_ratio": 'tall',
                 "messenger_extensions": true
               }
@@ -96,7 +95,7 @@ function callSendAPI(sender_psid, response) {
     "uri": "https://graph.facebook.com/v2.6/me/messages",
     "qs": { "access_token": PAGE_ACCESS_TOKEN,
             "whitelisted_domains":[
-            "https://348fc4ba.ngrok.io/random.html" 
+            "https://xandchill.herokuapp.com/random.html" 
           ] 
     },
     "method": "POST",
