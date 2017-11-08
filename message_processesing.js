@@ -2,11 +2,9 @@ const request = require('request');
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 module.exports.handleMessage = function(sender_psid, received_message) {
-  let response;
-
   if (received_message.text) {
     console.log("Text Message received.");
-    response = {
+    let response = {
       "text": "Please share your location",
       "quick_replies":[
         {
@@ -14,15 +12,14 @@ module.exports.handleMessage = function(sender_psid, received_message) {
         }
       ]
     }
+    // Send the response message
+    callSendAPI(sender_psid, response);
   } else if (received_message.attachments) {
     console.log("Location Quick Reply received.");
-    createEventList(received_message);
+    createEventList(sender_psid, received_message);
   } else {
     console.log("Unknown message type, message: " + received_message);
   }
-  
-  // Send the response message
-  callSendAPI(sender_psid, response);    
 }
 
 module.exports.handlePostback = function(sender_psid, received_postback) {
@@ -56,7 +53,7 @@ function callSendAPI(sender_psid, response) {
   });
 }
 
-function createEventList(message) {
+function createEventList(sender_psid, message) {
   lat = message.attachments[0].payload.coordinates.lat
   lng = message.attachments[0].payload.coordinates.long
 
