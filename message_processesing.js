@@ -5,7 +5,7 @@ module.exports.handleMessage = function(sender_psid, received_message) {
   if (received_message.text) {
     console.log("Text Message received.");
     let response = {
-      "text": "Please share your location",
+      "text": "Would you like to share your location?",
       "quick_replies":[
         {
           "content_type":"location"
