@@ -94,7 +94,8 @@ function generateTMEventTemplate(events) {
     "attachment": {
       "type": "template",
       "payload": {
-        "template_type": "generic",
+        "template_type": "list",
+        "top_element_style": "LARGE",
         "elements": elements
       }
     }
@@ -104,12 +105,8 @@ function generateTMEventTemplate(events) {
 function generateElementsJSON(events){
   let elements = [],
       chosenEvents = [];
-  let maxEvents = 5;
-  if (events.length < 5) {
-    maxEvents = events.length;
-  }
 
-  for (var i = 0; i < maxEvents; i++) {
+  for (var i = 0; i < 4; i++) {
     let randomEventNum = Math.floor(Math.random()*events.length);
     while(chosenEvents.includes(randomEventNum)){
       randomEventNum = Math.floor(Math.random()*events.length);
