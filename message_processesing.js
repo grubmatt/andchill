@@ -14,7 +14,7 @@ module.exports.handleMessage = function(sender_psid, received_message) {
     }
     // Send the response message
     callSendAPI(sender_psid, response);
-  } else if (received_message.attachments) {
+  } else if (received_message.attachments[0].type=='location') {
     console.log("Location Quick Reply received.");
     console.log(received_message.attachments);
     callSendAPI(sender_psid, {"text": "Finding Events!"});
@@ -92,26 +92,25 @@ function createEventList(sender_psid, message) {
 function generateTMEventTemplate(events) {
   // Generates a Generic Template for a TicketMaster Event
   elements = generateElementsJSON(events);
-  return {
+  return { 
     "attachment": {
       "type": "template",
       "payload": {
         "template_type": "list",
-        "top_element_style": "large",
-        "elements": elements
+        "top_element_style": "compact",
+        "elements": elements,
+        "buttons": [
+          {
+            "type": "web_url",
+            "title": "Refine Search",
+            "url": "https://xandchill.herokuapp.com/refine.html",
+            "webview_height_ratio": "tall",
+            "messenger_extensions": true
+          }
+        ]  
       }
-    },
-    "buttons": [
-      {
-        "type": "web_url",
-        "title": "Refine Search",
-        "url": "https://xandchill.herokuapp.com/refine.html",
-        "webview_height_ratio": "tall",
-        "messenger_extensions": true
-      }
-    ]
+    }
   }
-
 }
 
 function generateElementsJSON(events){
