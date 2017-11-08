@@ -26,7 +26,6 @@ module.exports.handleMessage = function(sender_psid, received_message) {
 module.exports.handlePostback = function(sender_psid, received_postback) {
   console.log("Postback received");
   let response;
-  // Get the payload for the postback
   let payload = received_postback.payload;
 }
 
@@ -72,8 +71,6 @@ function createEventList(sender_psid, message) {
         var events = JSON.parse(body);
         if (events["_embedded"] && events["_embedded"]["events"].length > 0) {
           console.log('ticketmaster requested!');
-          let event_num = Math.floor(Math.random()*events["_embedded"]["events"].length)
-          let event = events["_embedded"]["events"][event_num];
           response = generateTMEventTemplate(events["_embedded"]["events"]);
         } else {
           response = { "text": "Sorry we couldnt find any events" };
@@ -132,9 +129,11 @@ function generateElementsJSON(events){
           "title": "Book Event"
         },
         {
-          "type":"postback",
+          "type": "web_url",
           "title": "Refine Search",
-          "payload": "refine"
+          "url": "https://xandchill.herokuapp.com/refine.html",
+          "webview_height_ratio": "tall",
+          "messenger_extensions": true
         }
       ],
     })
