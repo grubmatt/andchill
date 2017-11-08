@@ -16,6 +16,7 @@ module.exports.handleMessage = function(sender_psid, received_message) {
     callSendAPI(sender_psid, response);
   } else if (received_message.attachments) {
     console.log("Location Quick Reply received.");
+    console.log(received_message.attachments);
     callSendAPI(sender_psid, {"text": "Finding Events!"});
     createEventList(sender_psid, received_message);
   } else {
@@ -58,8 +59,8 @@ function callSendAPI(sender_psid, response) {
 }
 
 function createEventList(sender_psid, message) {
-  lat = message.attachments[0].payload.coordinates.lat
-  lng = message.attachments[0].payload.coordinates.long
+  lat = message.attachments[0].payload.coordinates.lat;
+  lng = message.attachments[0].payload.coordinates.long;
 
   let params = "radius=25&units=miles&latlong="+lat+","+lng+"&apikey="+process.env.TICKETMASTER_APIKEY;
   let req_url = "https://app.ticketmaster.com/discovery/v2/events.json?"+params;
@@ -76,6 +77,7 @@ function createEventList(sender_psid, message) {
         if (events["_embedded"] && events["_embedded"]["events"].length > 0) {
           console.log('ticketmaster requested!');
           response = generateTMEventTemplate(events["_embedded"]["events"]);
+          console.log(response);
         } else {
           response = { "text": "Sorry we couldnt find any events" };
         }
