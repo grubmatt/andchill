@@ -76,7 +76,7 @@ function createEventList(message) {
           console.log('ticketmaster requested!');
           let event_num = Math.floor(Math.random()*events["_embedded"]["events"].length)
           let event = events["_embedded"]["events"][event_num];
-          response = generateTMEventTemplate(events["_embedded"]["events"], payload);
+          response = generateTMEventTemplate(events["_embedded"]["events"]);
         } else {
           response = { "text": "Sorry we couldnt find any events" };
         }
@@ -88,7 +88,7 @@ function createEventList(message) {
   );
 }
 
-function generateTMEventTemplate(events, payload) {
+function generateTMEventTemplate(events) {
   // Generates a Generic Template for a TicketMaster Event
   elements = generateElementsJSON(events);
   return {
