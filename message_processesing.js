@@ -126,21 +126,13 @@ function generateElementsJSON(events){
     let event = events[randomEventNum];
     elements.push({
       "title": event["name"],
-      "subtitle": "Click the picture to learn more!",
       "image_url": event["images"][0]["url"],
       "default_action": {
         "type": "web_url",
         "url": event["url"],
         "messenger_extensions": false,
         "webview_height_ratio": "compact"
-      },
-      "buttons": [
-        {
-          "type":"web_url",
-          "url": event["url"],
-          "title": "Book Event"
-        }
-      ],
+      }
     })
   }
   console.log(chosenEvents);
