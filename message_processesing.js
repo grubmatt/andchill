@@ -97,11 +97,21 @@ function generateTMEventTemplate(events) {
       "type": "template",
       "payload": {
         "template_type": "list",
-        "top_element_style": "LARGE",
+        "top_element_style": "large",
         "elements": elements
       }
-    }
+    },
+    "buttons": [
+      {
+        "type": "web_url",
+        "title": "Refine Search",
+        "url": "https://xandchill.herokuapp.com/refine.html",
+        "webview_height_ratio": "tall",
+        "messenger_extensions": true
+      }
+    ]
   }
+
 }
 
 function generateElementsJSON(events){
@@ -130,13 +140,6 @@ function generateElementsJSON(events){
           "type":"web_url",
           "url": event["url"],
           "title": "Book Event"
-        },
-        {
-          "type": "web_url",
-          "title": "Refine Search",
-          "url": "https://xandchill.herokuapp.com/refine.html",
-          "webview_height_ratio": "tall",
-          "messenger_extensions": true
         }
       ],
     })
