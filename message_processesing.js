@@ -16,6 +16,7 @@ module.exports.handleMessage = function(sender_psid, received_message) {
     callSendAPI(sender_psid, response);
   } else if (received_message.attachments) {
     console.log("Location Quick Reply received.");
+    callSendAPI(sender_psid, {"text": "Finding Events"});
     createEventList(sender_psid, received_message);
   } else {
     console.log("Unknown message type, message: " + received_message);
@@ -23,7 +24,7 @@ module.exports.handleMessage = function(sender_psid, received_message) {
 }
 
 module.exports.handlePostback = function(sender_psid, received_postback) {
-  console.log("Postback received");
+  console.log("Postback received: "+received_postback);
   let response;
   // Get the payload for the postback
   let payload = received_postback.payload;
@@ -100,14 +101,19 @@ function generateTMEventTemplate(events) {
 }
 
 function generateElementsJSON(events){
-  let elements = [];
+  let elements = [],
+      chosenEvents = [];
   let maxEvents = 5;
   if (events.length < 5) {
     maxEvents = events.length;
   }
 
   for (var i = 0; i < maxEvents; i++) {
-    let event  = events[i];
+    let randomEventNum = Math.floor(Math.random()*events.length);
+    while(chosenEvents.includes(randomEventNum)){
+      randomEventNum = Math.floor(Math.random()*events.length);
+    }
+    let event = events[randomEventNum];
     elements.push({
       "title": event["name"],
       "subtitle": "Click the picture to learn more!",
@@ -122,7 +128,12 @@ function generateElementsJSON(events){
         {
           "type":"web_url",
           "url": event["url"],
-          "title": "Get Tickets"
+          "title": "Book Event"
+        },
+        {
+          "type":"postback",
+          "title": "Refine Search",
+          "payload": "refine"
         }
       ],
     })
