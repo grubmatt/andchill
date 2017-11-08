@@ -16,7 +16,7 @@ module.exports.handleMessage = function(sender_psid, received_message) {
     callSendAPI(sender_psid, response);
   } else if (received_message.attachments) {
     console.log("Location Quick Reply received.");
-    callSendAPI(sender_psid, {"text": "Finding Events"});
+    callSendAPI(sender_psid, {"text": "Finding Events!"});
     createEventList(sender_psid, received_message);
   } else {
     console.log("Unknown message type, message: " + received_message);
