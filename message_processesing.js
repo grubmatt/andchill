@@ -24,7 +24,7 @@ module.exports.handleMessage = function(sender_psid, received_message) {
 }
 
 module.exports.handlePostback = function(sender_psid, received_postback) {
-  console.log("Postback received: "+received_postback);
+  console.log("Postback received");
   let response;
   // Get the payload for the postback
   let payload = received_postback.payload;
@@ -113,7 +113,7 @@ function generateElementsJSON(events){
     while(chosenEvents.includes(randomEventNum)){
       randomEventNum = Math.floor(Math.random()*events.length);
     }
-    chosenEvents.push(randomEventNum)
+    chosenEvents.push(randomEventNum);
     let event = events[randomEventNum];
     elements.push({
       "title": event["name"],
@@ -139,6 +139,7 @@ function generateElementsJSON(events){
       ],
     })
   }
+  console.log(chosenEvents);
 
   return elements
 }
