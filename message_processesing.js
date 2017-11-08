@@ -113,6 +113,7 @@ function generateElementsJSON(events){
     while(chosenEvents.includes(randomEventNum)){
       randomEventNum = Math.floor(Math.random()*events.length);
     }
+    chosenEvents.push(randomEventNum)
     let event = events[randomEventNum];
     elements.push({
       "title": event["name"],
