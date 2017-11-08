@@ -14,7 +14,7 @@ module.exports.handleMessage = function(sender_psid, received_message) {
         }
       ]
     }
-  } else if (received_message.attachments['type'] == 'location') {
+  } else if (received_message.attachments) {
     console.log("Location Quick Reply received.");
     createEventList(received_message);
   } else {
