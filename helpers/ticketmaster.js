@@ -1,8 +1,10 @@
 // API Ref: https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/
 // https://developer.ticketmaster.com/api-explorer/v2/
 const request = require('request');
+const facebook = require('./helpers/facebook.js');
+
 var ticketmaster = {
-  createEventList: function(facebook, sender_psid, message) {
+  createEventList: function(sender_psid, message) {
     lat = message.attachments[0].payload.coordinates.lat;
     lng = message.attachments[0].payload.coordinates.long;
 

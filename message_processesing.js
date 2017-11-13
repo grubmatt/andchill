@@ -1,7 +1,7 @@
 const request = require('request');
+const facebook = require('./helpers/facebook.js');
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 var ticketmaster = require('./helpers/ticketmaster.js');
-var facebook = require('./helpers/facebook.js');
 
 module.exports.handleMessage = function(sender_psid, received_message) {
   if (received_message.text) {
@@ -20,7 +20,7 @@ module.exports.handleMessage = function(sender_psid, received_message) {
     console.log("Location Quick Reply received.");
     console.log(received_message.attachments);
     facebook.callSendAPI(sender_psid, {"text": "Finding Events!"});
-    ticketmaster.createEventList(facebook, sender_psid, received_message);
+    ticketmaster.createEventList(sender_psid, received_message);
   } else {
     console.log("Unknown message type, message: " + received_message);
   }
