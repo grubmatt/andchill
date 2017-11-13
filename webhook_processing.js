@@ -20,8 +20,8 @@ module.exports.handleMessage = function(sender_psid, received_message) {
     console.log(received_message.attachments);
 
     facebook.callSendAPI(sender_psid, {"text": "Finding Events!"});
-    yelp.getRestaurants(sender_psid, received_message);
-    //ticketmaster.createEventList(facebook, sender_psid, received_message);
+    yelp.createRestaurantList(facebook, sender_psid, received_message);
+    ticketmaster.createEventList(facebook, sender_psid, received_message);
   } else {
     console.log("Unknown message type, message: " + received_message);
   }

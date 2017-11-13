@@ -1,7 +1,7 @@
 const request = require('request');
 
 var yelp = {
-  getRestaurants: function(sender_psid, message) {
+  createRestaurantList: function(facebook, sender_psid, message) {
     lat = message.attachments[0].payload.coordinates.lat;
     lng = message.attachments[0].payload.coordinates.long;
 
@@ -19,12 +19,67 @@ var yelp = {
         if (!err) {
           var restaurants = JSON.parse(body);
           console.log(restaurants);
+          // Guards against no restaurants being returned
+          if (restaurants["businesses"].length > 0) {
+            console.log('yelp requested!');
+            response = this.generateEventListTemplate(restaurants["businesses"]);
+            console.log(response);
+          } else {
+            response = { "text": "Sorry we couldnt find any restaurants!" };
+          }
+          facebook.callSendAPI(sender_psid, response);
         } else {
           console.error("Unable to send message:" + err);
         }
       }
     );
   },
+  ,
+  generateEventListTemplate: function(restaurants) {
+    return { 
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "list",
+          "top_element_style": "compact",
+          "elements": this.generateElements(restaurants),
+          "buttons": [
+            {
+              "type": "web_url",
+              "title": "Refine Search",
+              "url": "https://xandchill.herokuapp.com/refine.html",
+              "webview_height_ratio": "tall",
+              "messenger_extensions": true
+            }
+          ]  
+        }
+      }
+    }
+  },
+  generateElements: function (restaurants){
+    let elements = [],
+        chosenRestaurants = [];
+
+    for (var i = 0; i < 4; i++) {
+      let randomRestaurantNum = Math.floor(Math.random()*events.length);
+      while(chosenRestaurants.includes(randomRestaurantNum)){
+        randomRestaurantNum = Math.floor(Math.random()*events.length);
+      }
+      chosenRestaurants.push(randomRestaurantNum);
+      let restaurant = events[randomRestaurantNum];
+      elements.push({
+        "title": restaurant["name"],
+        "image_url": restaurant["image_url"],
+        "default_action": {
+          "type": "web_url",
+          "url": restaurant["url"],
+          "messenger_extensions": false,
+          "webview_height_ratio": "compact"
+        }
+      })
+    }
+    return elements;
+  }
 };
 
 module.exports = yelp;
