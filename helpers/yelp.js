@@ -1,5 +1,7 @@
+const request = require('request');
+
 var yelp = {
-  getRestaurants: function(request, sender_psid, message) {
+  getRestaurants: function(sender_psid, message) {
     lat = message.attachments[0].payload.coordinates.lat;
     lng = message.attachments[0].payload.coordinates.long;
 
