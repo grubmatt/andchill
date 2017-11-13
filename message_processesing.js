@@ -1,6 +1,6 @@
 const request = require('request');
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
-var ticketmaster = require('helpers/ticketmaster.js');
+var ticketmaster = require('./helpers/ticketmaster.js');
 
 module.exports.handleMessage = function(sender_psid, received_message) {
   if (received_message.text) {
