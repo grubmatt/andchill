@@ -1,6 +1,5 @@
 const request = require('request');
 const facebook = require('./helpers/facebook.js');
-const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const ticketmaster = require('./helpers/ticketmaster.js');
 
 module.exports.handleMessage = function(sender_psid, received_message) {
@@ -15,7 +14,7 @@ module.exports.handleMessage = function(sender_psid, received_message) {
       ]
     }
     // Send the response message
-    callSendAPI(sender_psid, response);
+    facebook.callSendAPI(sender_psid, response);
   } else if (received_message.attachments[0].type=='location') {
     console.log("Location Quick Reply received.");
     console.log(received_message.attachments);
