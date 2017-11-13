@@ -12,8 +12,8 @@ var yelp = {
     request({
         url: req_url,
         method: "GET",
-        headers: {
-          "Bearer": process.env.YELP_ACCESS_KEY;
+        "auth": {
+          "bearer": process.env.YELP_ACCESS_KEY;
         }
       }, (err, res, body) => {
         if (!err) {
