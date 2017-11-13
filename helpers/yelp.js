@@ -11,7 +11,10 @@ var yelp = {
 
     request({
         url: req_url,
-        method: "GET"
+        method: "GET",
+        headers: {
+          "Bearer": process.env.YELP_ACCESS_KEY;
+        }
       }, (err, res, body) => {
         if (!err) {
           var restaurants = JSON.parse(body);
