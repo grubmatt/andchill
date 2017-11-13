@@ -28,6 +28,7 @@ module.exports.handlePostback = function(sender_psid, received_postback) {
   console.log("Postback received");
   let response;
   let payload = received_postback.payload;
+
 }
 
 function callSendAPI(sender_psid, response) {
@@ -136,6 +137,5 @@ function generateElementsJSON(events){
     })
   }
   console.log(chosenEvents);
-
-  return elements
+  return elements;
 }
