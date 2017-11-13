@@ -13,7 +13,7 @@ var yelp = {
         url: req_url,
         method: "GET",
         "auth": {
-          "bearer": process.env.YELP_ACCESS_KEY;
+          "bearer": process.env.YELP_ACCESS_KEY
         }
       }, (err, res, body) => {
         if (!err) {
