@@ -2,8 +2,7 @@ const request = require('request');
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 module.exports.handleMessage = function(sender_psid, received_message) {
-  let response;
-  console.log("message received.");
+  let response = "Error";
 
   if (received_message.text) {
     response = {
@@ -23,12 +22,14 @@ module.exports.handleMessage = function(sender_psid, received_message) {
               {
                 "type": "postback",
                 "title": "Go to a Concert!",
-                "payload": "concert",
+                "payload": "concert"
               },
               {
-                "type": "postback",
+                "type": "web_url",
                 "title": "Random Event!",
-                "payload": "random",
+                "url": "https://xandchill.herokuapp.com/random.html",
+                "webview_height_ratio": "tall",
+                "messenger_extensions": true
               }
             ],
           }]
@@ -36,6 +37,8 @@ module.exports.handleMessage = function(sender_psid, received_message) {
       }
     }
   }
+
+  console.log(response);
   
   // Send the response message
   callSendAPI(sender_psid, response);    
@@ -91,12 +94,16 @@ function callSendAPI(sender_psid, response) {
   // Send the HTTP request to the Messenger Platform
   request({
     "uri": "https://graph.facebook.com/v2.6/me/messages",
-    "qs": { "access_token": PAGE_ACCESS_TOKEN },
+    "qs": { "access_token": PAGE_ACCESS_TOKEN,
+            "whitelisted_domains":[
+            "https://xandchill.herokuapp.com"
+          ] 
+    },
     "method": "POST",
     "json": request_body
   }, (err, res, body) => {
     if (!err) {
-      console.log('message sent!')
+      console.log('message sent!');
     } else {
       console.error("Unable to send message:" + err);
     }
