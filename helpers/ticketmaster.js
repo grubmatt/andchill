@@ -1,7 +1,8 @@
 // API Ref: https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/
 // https://developer.ticketmaster.com/api-explorer/v2/
+const request = require('request');
 var ticketmaster = {
-  createEventList: function(request, sender_psid, message) {
+  createEventList: function(facebook, sender_psid, message) {
     lat = message.attachments[0].payload.coordinates.lat;
     lng = message.attachments[0].payload.coordinates.long;
 
@@ -23,7 +24,7 @@ var ticketmaster = {
           } else {
             response = { "text": "Sorry we couldnt find any events" };
           }
-          callSendAPI(sender_psid, response);
+          facebook.callSendAPI(sender_psid, response);
         } else {
           console.error("Unable to send message:" + err);
         }
