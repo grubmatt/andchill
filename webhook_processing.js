@@ -1,6 +1,6 @@
-const facebook = require('./helpers/facebook.js');
-const ticketmaster = require('./helpers/ticketmaster.js');
-const yelp = require('./helpers/yelp.js');
+const facebook = require('./apis/facebook.js');
+const ticketmaster = require('./apis/ticketmaster.js');
+const yelp = require('./apis/yelp.js');
 
 module.exports.handleMessage = function(sender_psid, received_message) {
   if (received_message.text) {

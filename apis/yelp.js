@@ -1,3 +1,4 @@
+//API Ref: https://www.yelp.com/developers/documentation/v3/
 const request = require('request');
 
 var yelp = {
@@ -34,7 +35,6 @@ var yelp = {
       }
     );
   },
-  ,
   generateEventListTemplate: function(restaurants) {
     return { 
       "attachment": {
