@@ -67,8 +67,6 @@ function createEventList(sender_psid, message) {
   let req_url = "https://app.ticketmaster.com/discovery/v2/events.json?"+params;
   console.log(req_url);
 
-  // API Ref: https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/
-  // https://developer.ticketmaster.com/api-explorer/v2/
   request({
       url: req_url,
       method: "GET"
