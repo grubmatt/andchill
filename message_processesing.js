@@ -2,84 +2,33 @@ const request = require('request');
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 module.exports.handleMessage = function(sender_psid, received_message) {
-  let response = "Error";
-
   if (received_message.text) {
-    response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "What would you like to do?",
-            "subtitle": "Select an Option",
-            "buttons": [
-              {
-                "type": "postback",
-                "title": "See a Movie!",
-                "payload": "movie",
-              },
-              {
-                "type": "postback",
-                "title": "Go to a Concert!",
-                "payload": "concert"
-              },
-              {
-                "type": "web_url",
-                "title": "Random Event!",
-                "url": "https://xandchill.herokuapp.com/random.html",
-                "webview_height_ratio": "tall",
-                "messenger_extensions": true
-              }
-            ],
-          }]
+    console.log("Text Message received.");
+    let response = {
+      "text": "Would you like to share your location?",
+      "quick_replies":[
+        {
+          "content_type":"location"
         }
-      }
+      ]
     }
+    // Send the response message
+    callSendAPI(sender_psid, response);
+  } else if (received_message.attachments[0].type=='location') {
+    console.log("Location Quick Reply received.");
+    console.log(received_message.attachments);
+    callSendAPI(sender_psid, {"text": "Finding Events!"});
+    createEventList(sender_psid, received_message);
+  } else {
+    console.log("Unknown message type, message: " + received_message);
   }
-
-  console.log(response);
-  
-  // Send the response message
-  callSendAPI(sender_psid, response);    
 }
 
 module.exports.handlePostback = function(sender_psid, received_postback) {
   console.log("Postback received");
   let response;
-  // Get the payload for the postback
-  let payload = received_postback.payload,
-      apikey = process.env.TICKETMASTER_APIKEY,
-      req_url = "https://app.ticketmaster.com/discovery/v2/events.json?postalCode=15222&apikey="+apikey;
+  let payload = received_postback.payload;
 
-  // Set the request url based on the postback payload
-  // API Ref: https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/
-  if (payload === "concert") {
-    req_url += "classificationName=music";
-  } else if (payload === "movie") {
-    req_url += "classificationName=film";
-  } else if (payload === "random") {
-    // Start Date    End Date    
-    //requrl == "startDateTime=2017-10-23T12:00:00Z&endDateTime=2017-10-31T23:00:00Z"
-  }
-
-  request({
-      url: req_url,
-      method: "GET"
-    }, (err, res, body) => {
-      if (!err) {
-        var events = JSON.parse(body);
-        if (events["_embedded"] && events["_embedded"]["events"].length > 0) {
-          console.log('ticketmaster requested!');
-          response = generateTMEventTemplate(events["_embedded"]["events"], payload);
-        } else {
-          response = { "text": "Sorry we couldnt find any events" };
-        }
-        callSendAPI(sender_psid, response);
-      } else {
-        console.error("Unable to send message:" + err);
-      }
-    });
 }
 
 function callSendAPI(sender_psid, response) {
@@ -96,9 +45,9 @@ function callSendAPI(sender_psid, response) {
     "uri": "https://graph.facebook.com/v2.6/me/messages",
     "qs": { "access_token": PAGE_ACCESS_TOKEN,
             "whitelisted_domains":[
-            "https://xandchill.herokuapp.com"
-          ] 
-    },
+              "https://xandchill.herokuapp.com"
+            ]
+          },
     "method": "POST",
     "json": request_body
   }, (err, res, body) => {
@@ -107,51 +56,86 @@ function callSendAPI(sender_psid, response) {
     } else {
       console.error("Unable to send message:" + err);
     }
-  }); 
+  });
 }
 
-function generateTMEventTemplate(events, payload) {
+function createEventList(sender_psid, message) {
+  lat = message.attachments[0].payload.coordinates.lat;
+  lng = message.attachments[0].payload.coordinates.long;
+
+  let params = "radius=25&units=miles&latlong="+lat+","+lng+"&apikey="+process.env.TICKETMASTER_APIKEY;
+  let req_url = "https://app.ticketmaster.com/discovery/v2/events.json?"+params;
+  console.log(req_url);
+
+  // API Ref: https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/
+  // https://developer.ticketmaster.com/api-explorer/v2/
+  request({
+      url: req_url,
+      method: "GET"
+    }, (err, res, body) => {
+      if (!err) {
+        var events = JSON.parse(body);
+        if (events["_embedded"] && events["_embedded"]["events"].length > 0) {
+          console.log('ticketmaster requested!');
+          response = generateTMEventTemplate(events["_embedded"]["events"]);
+          console.log(response);
+        } else {
+          response = { "text": "Sorry we couldnt find any events" };
+        }
+        callSendAPI(sender_psid, response);
+      } else {
+        console.error("Unable to send message:" + err);
+      }
+    }
+  );
+}
+
+function generateTMEventTemplate(events) {
   // Generates a Generic Template for a TicketMaster Event
   elements = generateElementsJSON(events);
-  return {
+  return { 
     "attachment": {
       "type": "template",
       "payload": {
-        "template_type": "generic",
-        "elements": elements
+        "template_type": "list",
+        "top_element_style": "compact",
+        "elements": elements,
+        "buttons": [
+          {
+            "type": "web_url",
+            "title": "Refine Search",
+            "url": "https://xandchill.herokuapp.com/refine.html",
+            "webview_height_ratio": "tall",
+            "messenger_extensions": true
+          }
+        ]  
       }
     }
   }
 }
 
 function generateElementsJSON(events){
-  let elements = [];
-  let maxEvents = 5;
-  if (events.length < 5) {
-    maxEvents = events.length;
-  }
+  let elements = [],
+      chosenEvents = [];
 
-  for (var i = 0; i < maxEvents; i++) {
-    let event  = events[i];
+  for (var i = 0; i < 4; i++) {
+    let randomEventNum = Math.floor(Math.random()*events.length);
+    while(chosenEvents.includes(randomEventNum)){
+      randomEventNum = Math.floor(Math.random()*events.length);
+    }
+    chosenEvents.push(randomEventNum);
+    let event = events[randomEventNum];
     elements.push({
       "title": event["name"],
-      "subtitle": "Click the picture to learn more!",
       "image_url": event["images"][0]["url"],
       "default_action": {
         "type": "web_url",
         "url": event["url"],
         "messenger_extensions": false,
         "webview_height_ratio": "compact"
-      },
-      "buttons": [
-        {
-          "type":"web_url",
-          "url": event["url"],
-          "title": "Get Tickets"
-        }
-      ],
+      }
     })
   }
-
-  return elements
+  console.log(chosenEvents);
+  return elements;
 }
