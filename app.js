@@ -3,7 +3,7 @@
 const 
   express = require('express'),
   body_parser = require('body-parser'),
-  webhook_processor = require('./webhook_processesing.js'),
+  webhook_processor = require('./webhook_processing.js'),
   app = express().use(body_parser.json());
 
 // Sets server port and logs message on success
