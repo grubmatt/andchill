@@ -1,8 +1,35 @@
 // API Ref: https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/
 // https://developer.ticketmaster.com/api-explorer/v2/
-
 var ticketmaster = {
-  str: "",
+  createEventList: function(request, sender_psid, message) {
+    lat = message.attachments[0].payload.coordinates.lat;
+    lng = message.attachments[0].payload.coordinates.long;
+
+    let params = "radius=25&units=miles&latlong="+lat+","+lng+"&apikey="+process.env.TICKETMASTER_APIKEY;
+    let req_url = "https://app.ticketmaster.com/discovery/v2/events.json?"+params;
+    console.log(req_url);
+
+    request({
+        url: req_url,
+        method: "GET"
+      }, (err, res, body) => {
+        if (!err) {
+          var events = JSON.parse(body);
+          // Guards against no events being returned
+          if (events["_embedded"] && events["_embedded"]["events"].length > 0) {
+            console.log('ticketmaster requested!');
+            response = this.generateEventListTemplate(events["_embedded"]["events"]);
+            console.log(response);
+          } else {
+            response = { "text": "Sorry we couldnt find any events" };
+          }
+          callSendAPI(sender_psid, response);
+        } else {
+          console.error("Unable to send message:" + err);
+        }
+      }
+    );
+  },
   generateEventListTemplate: function(events) {
     return { 
       "attachment": {
@@ -10,7 +37,7 @@ var ticketmaster = {
         "payload": {
           "template_type": "list",
           "top_element_style": "compact",
-          "elements": generateElements(events),
+          "elements": this.generateElements(events),
           "buttons": [
             {
               "type": "web_url",
