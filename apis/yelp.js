@@ -61,12 +61,12 @@ var yelp = {
         chosenRestaurants = [];
 
     for (var i = 0; i < 4; i++) {
-      let randomRestaurantNum = Math.floor(Math.random()*events.length);
+      let randomRestaurantNum = Math.floor(Math.random()*restaurants.length);
       while(chosenRestaurants.includes(randomRestaurantNum)){
-        randomRestaurantNum = Math.floor(Math.random()*events.length);
+        randomRestaurantNum = Math.floor(Math.random()*restaurants.length);
       }
       chosenRestaurants.push(randomRestaurantNum);
-      let restaurant = events[randomRestaurantNum];
+      let restaurant = restaurants[randomRestaurantNum];
       elements.push({
         "title": restaurant["name"],
         "image_url": restaurant["image_url"],
