@@ -1,5 +1,6 @@
 'use strict';
-const Secrets = require('./secrets');
+const ENV = require('./env.js');
+const Plan = require('./models/plan.js');
 const 
   express = require('express'),
   body_parser = require('body-parser'),
@@ -8,6 +9,9 @@ const
 
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
+app.set('views', __dirname + '/views');
+// Define the view (templating) engine
+app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 
 app.post('/webhook', (req, res) => {  
@@ -37,7 +41,7 @@ app.post('/webhook', (req, res) => {
 });
 
 app.get('/webhook', (req, res) => {
-  const VERIFY_TOKEN = Secrets.VERIFY_TOKEN
+  const VERIFY_TOKEN = ENV.VERIFY_TOKEN
   // Parse params from the webhook verification request
   let mode = req.query['hub.mode'];
   let token = req.query['hub.verify_token'];
@@ -54,4 +58,10 @@ app.get('/webhook', (req, res) => {
       res.sendStatus(403);      
     }
   }
+});
+
+app.get('/plan/:planId', (req, res) => {
+  var planId = req.params.planId
+  var plan = Plan.find(planId)
+  res.render('plan', {plan: plan})
 });
