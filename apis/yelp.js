@@ -1,6 +1,6 @@
 //API Ref: https://www.yelp.com/developers/documentation/v3/
 const request = require('request');
-const ENV = require('./env')
+const ENV = require('../env.js')
 
 var yelp = {
   createRestaurantList: function(facebook, sender_psid, message) {

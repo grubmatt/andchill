@@ -1,5 +1,5 @@
 const request = require('request');
-const ENV = require('./env');
+const ENV = require('../env.js');
 
 var facebook = {
   callSendAPI: function(sender_psid, response) {
