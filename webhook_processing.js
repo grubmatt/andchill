@@ -1,6 +1,8 @@
 const facebook = require('./apis/facebook.js');
 const ticketmaster = require('./apis/ticketmaster.js');
 const yelp = require('./apis/yelp.js');
+const Plan = require('./models/plan.js');
+
 
 module.exports.handleMessage = function(sender_psid, received_message) {
   if (received_message.text) {
@@ -18,7 +20,7 @@ module.exports.handleMessage = function(sender_psid, received_message) {
   } else if (received_message.attachments[0].type=='location') {
     console.log("Location Quick Reply received.");
     console.log(received_message.attachments);
-
+    Plan.create(sender_psid, received_message.attachments[0].payload.coordinates.lat, received_message.attachments[0].payload.coordinates.lat)
     facebook.callSendAPI(sender_psid, {"text": "Finding Events and Restaurants!"});
     yelp.createRestaurantList(facebook, sender_psid, received_message);
     ticketmaster.createEventList(facebook, sender_psid, received_message);
