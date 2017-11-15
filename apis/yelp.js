@@ -20,12 +20,12 @@ var yelp = {
       }, (err, res, body) => {
         if (!err) {
           var restaurants = JSON.parse(body);
-          console.log(restaurants);
+          // console.log(restaurants);
           // Guards against no restaurants being returned
           if (restaurants["businesses"].length > 0) {
             console.log('yelp requested!');
             response = this.generateEventListTemplate(restaurants["businesses"]);
-            console.log(response);
+            // console.log(response);
           } else {
             response = { "text": "Sorry we couldnt find any restaurants!" };
           }
@@ -37,18 +37,20 @@ var yelp = {
     );
   },
   generateEventListTemplate: function(restaurants) {
+    var elements = this.generateElements(restaurants)
+    var url = "https://35dc912e.ngrok.io/restaurants"
     return { 
       "attachment": {
         "type": "template",
         "payload": {
           "template_type": "list",
           "top_element_style": "compact",
-          "elements": this.generateElements(restaurants),
+          "elements": elements,
           "buttons": [
             {
               "type": "web_url",
               "title": "Refine Search",
-              "url": "https://xandchill.herokuapp.com/refine.html",
+              "url": url,
               "webview_height_ratio": "tall",
               "messenger_extensions": true
             }
@@ -82,5 +84,14 @@ var yelp = {
     return elements;
   }
 };
+
+function buildUrl(elements) {
+  var url = "https://35dc912e.ngrok.io/restaurants?array="
+  for(var i = 0; i < elements.length; i++) {
+    url = url + "|" +JSON.stringify(elements[i])
+  }
+  console.log(url)
+  return url
+}
 
 module.exports = yelp;

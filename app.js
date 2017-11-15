@@ -65,3 +65,7 @@ app.get('/plan/:planId', (req, res) => {
   var plan = Plan.find(planId)
   res.render('plan', {plan: plan})
 });
+
+app.get('/restaurants', (req, res) => {
+  res.render('yelp', {restaurants: rests})
+})
