@@ -1,6 +1,6 @@
 //API Ref: https://www.yelp.com/developers/documentation/v3/
 const request = require('request');
-const Secrets = require('./secrets')
+const ENV = require('./env')
 
 var yelp = {
   createRestaurantList: function(facebook, sender_psid, message) {
@@ -15,7 +15,7 @@ var yelp = {
         url: req_url,
         method: "GET",
         "auth": {
-          "bearer": Secrets.YELP_ACCESS_KEY
+          "bearer": ENV.YELP_ACCESS_KEY
         }
       }, (err, res, body) => {
         if (!err) {
