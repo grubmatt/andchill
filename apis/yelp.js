@@ -1,9 +1,10 @@
 //API Ref: https://www.yelp.com/developers/documentation/v3/
 const request = require('request');
 const ENV = require('../env.js')
+const Event = require('../models/event.js')
 
 var yelp = {
-  createRestaurantList: function(facebook, sender_psid, message) {
+  createRestaurantList: function(facebook, sender_psid, message, planId) {
     lat = message.attachments[0].payload.coordinates.lat;
     lng = message.attachments[0].payload.coordinates.long;
 
@@ -24,7 +25,7 @@ var yelp = {
           // Guards against no restaurants being returned
           if (restaurants["businesses"].length > 0) {
             console.log('yelp requested!');
-            response = this.generateEventListTemplate(restaurants["businesses"]);
+            response = this.generateEventListTemplate(restaurants["businesses"], planId);
             // console.log(response);
           } else {
             response = { "text": "Sorry we couldnt find any restaurants!" };
@@ -36,9 +37,9 @@ var yelp = {
       }
     );
   },
-  generateEventListTemplate: function(restaurants) {
-    var elements = this.generateElements(restaurants)
-    var url = "https://35dc912e.ngrok.io/restaurants"
+  generateEventListTemplate: function(restaurants, planId) {
+    var elements = this.generateElements(restaurants, planId)
+    var url = "https://35dc912e.ngrok.io/restaurants/"+planId
     return { 
       "attachment": {
         "type": "template",
@@ -59,7 +60,7 @@ var yelp = {
       }
     }
   },
-  generateElements: function (restaurants){
+  generateElements: function (restaurants, planId){
     let elements = [],
         chosenRestaurants = [];
 
@@ -70,6 +71,7 @@ var yelp = {
       }
       chosenRestaurants.push(randomRestaurantNum);
       let restaurant = restaurants[randomRestaurantNum];
+      Event.create(restaurant, planId);
       elements.push({
         "title": restaurant["name"],
         "image_url": restaurant["image_url"],

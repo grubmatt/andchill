@@ -19,12 +19,12 @@ var create = function(ownerId, lat, lng, callBack) {
 	})
 }
 
-var find = function(id) {
+var find = function(id, callback) {
 	Plan.findOne({'_id' : id}, function(err, plan) {
 		if(err) { 
 			console.log(err)
 		} else {
-			return plan
+			callback(plan)
 		}
 	})
 }

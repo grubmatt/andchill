@@ -1,1 +1,87 @@
-Hi test
+<html>
+  <head>
+    <title>Share</title>
+  </head>
+  <body>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+      (function(d, s, id){
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) {return;}
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.com/en_US/messenger.Extensions.js";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'Messenger'));
+
+      function beginShare(){
+        var id = $("#shareBut").val()
+        var message = {
+          attachment: {
+            type: 'template',
+            payload: {
+              template_type: 'generic',
+              elements: [{
+                title: "title",
+                subtitle: 'A shared Plan',
+                default_action: {
+                  type: 'web_url',
+                  url: "https://35dc912e.ngrok.io/plan/"+id,
+                  messenger_extensions: true,
+                },
+                buttons: [
+              {
+                "type": "web_url",
+                "title": "Share",
+                "url": "https://35dc912e.ngrok.io/plan/"+id,
+                "webview_height_ratio": 'tall',
+                "messenger_extensions": true
+              }
+            ],
+              }],
+            },
+          },
+        };
+
+        MessengerExtensions.beginShareFlow(function(share_response) {
+          // User dismissed without error, but did they share the message?
+          if(share_response.is_sent){
+            // The user actually did share. 
+            // Perhaps close the window w/ requestCloseBrowser().
+            console.log("hjasdfasdf")
+          }
+        }, 
+        function(errorCode, errorMessage) {      
+        // An error occurred in the process
+        console.log(errorMessage);
+
+        },
+        message,
+        "broadcast");
+      }
+
+      window.extAsyncInit = function() {
+        // the Messenger Extensions JS SDK is done loading 
+        MessengerExtensions.getContext('1764115690549821', 
+          function success(thread_context){
+            // success
+            console.log("out")
+            console.log(thread_context.thread_type)
+            if(thread_context.thread_type != "USER_TO_PAGE") {
+              console.log("in")
+              console.log(plan)
+              window.location.href = '/restaurants/'+<%= plan._id %>;
+              return false;
+            }
+          },
+          function error(err){
+            // error
+            console.log("Error")
+            console.log(err)
+          }
+        );
+      };
+      </script>
+
+      <button id="shareBut" type="button" onclick="beginShare()" value=<%= plan._id %>>Share</button>
+  </body>
+</html>

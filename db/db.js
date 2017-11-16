@@ -23,9 +23,19 @@ lng: String,
 collabIds: [String]
 });
 
+var eventSchema = mongoose.Schema({
+	title: String,
+	planId: Number,
+	image_url: String,
+	url: String
+})
+
+eventSchema.plugin(autoIncrement.plugin, 'Event');
+var Event = mongoose.model('Event', eventSchema);
 
 planSchema.plugin(autoIncrement.plugin, 'Plan');
 var Plan = mongoose.model('Plan', planSchema);
 
 module.exports.db = db;
 module.exports.Plan = Plan;
+module.exports.Event = Event;

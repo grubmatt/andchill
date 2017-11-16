@@ -1,6 +1,7 @@
 'use strict';
 const ENV = require('./env.js');
 const Plan = require('./models/plan.js');
+const Event = require('./models/event.js');
 const 
   express = require('express'),
   body_parser = require('body-parser'),
@@ -62,10 +63,16 @@ app.get('/webhook', (req, res) => {
 
 app.get('/plan/:planId', (req, res) => {
   var planId = req.params.planId
-  var plan = Plan.find(planId)
-  res.render('plan', {plan: plan})
+  var plan = Plan.find(planId, (plan) => {
+    res.render('plan', {plan: plan})
+  })
 });
 
-app.get('/restaurants', (req, res) => {
-  res.render('yelp', {restaurants: rests})
+app.get('/restaurants/:planId', (req, res) => {
+  var planId = req.params.planId
+  var rests = Event.find(planId, (rests)=> {
+      console.log(rests)
+      res.render('yelp', {rests: rests})
+  })
+
 })
