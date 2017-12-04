@@ -2,6 +2,7 @@ const facebook = require('./apis/facebook.js');
 const ticketmaster = require('./apis/ticketmaster.js');
 const yelp = require('./apis/yelp.js');
 const Plan = require('./models/plan.js');
+const ENV = require('./env.js');
 
 
 module.exports.handleMessage = function(sender_psid, received_message) {
@@ -47,7 +48,7 @@ function createResponse(id) {
               {
                 "type": "web_url",
                 "title": "Share",
-                "url": "https://35dc912e.ngrok.io/plan/"+id,
+                "url": ENV.BASE_URL+id,
                 "webview_height_ratio": 'tall',
                 "messenger_extensions": true
               }

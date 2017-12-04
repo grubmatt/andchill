@@ -14,6 +14,7 @@
     "express": "^4.16.2",
     "mongoose": "^4.13.2",
     "mongoose-auto-increment": "^5.0.1",
+    "places.js": "^1.4.15",
     "request": "^2.83.0"
   }
 }

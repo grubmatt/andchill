@@ -41,6 +41,10 @@ app.post('/webhook', (req, res) => {
   }
 });
 
+app.get('/', (req, res) => {
+  res.render('location')
+});
+
 app.get('/webhook', (req, res) => {
   const VERIFY_TOKEN = ENV.VERIFY_TOKEN
   // Parse params from the webhook verification request
@@ -61,10 +65,17 @@ app.get('/webhook', (req, res) => {
   }
 });
 
+app.put('/new/plan/:ownerId/:lat/:lng', (req,res) => {
+  Plan.create(req.params.ownerId, req.params.lat, req.params.lng, (plan) => {
+    res.send(plan)
+  });
+})
+
 app.get('/plan/:planId', (req, res) => {
   var planId = req.params.planId
-  var plan = Plan.find(planId, (plan) => {
-    res.render('plan', {plan: plan})
+  var rests = Event.find(planId, (rests)=> {
+      console.log(rests)
+      res.render('yelp', {rests: rests})
   })
 });
 
@@ -74,5 +85,4 @@ app.get('/restaurants/:planId', (req, res) => {
       console.log(rests)
       res.render('yelp', {rests: rests})
   })
-
 })

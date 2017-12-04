@@ -4,6 +4,38 @@ const ENV = require('../env.js')
 const Event = require('../models/event.js')
 
 var yelp = {
+
+  makeYelpCall: function(planId, lat, lng) {
+    let params = "latitude="+lat+"&longitude="+lng+"&categories=restaurants";
+    let req_url = "https://api.yelp.com/v3/businesses/search?"+params;
+    console.log(req_url);
+
+    request({
+        url: req_url,
+        method: "GET",
+        "auth": {
+          "bearer": ENV.YELP_ACCESS_KEY
+        }
+      }, (err, res, body) => {
+        if (!err) {
+          console.log(body);
+          var restaurants = JSON.parse(body);
+          // console.log(restaurants);
+          // Guards against no restaurants being returned
+          if (restaurants["businesses"].length > 0) {
+            console.log('yelp requested!');
+            response = this.generateEventListTemplate(restaurants["businesses"], planId);
+          } else {
+            response = { "text": "Sorry we couldnt find any restaurants!" };
+          }
+        } else {
+          console.error("Unable to send message:" + err);
+        }
+      }
+    );
+
+  },
+
   createRestaurantList: function(facebook, sender_psid, message, planId) {
     lat = message.attachments[0].payload.coordinates.lat;
     lng = message.attachments[0].payload.coordinates.long;
@@ -39,7 +71,7 @@ var yelp = {
   },
   generateEventListTemplate: function(restaurants, planId) {
     var elements = this.generateElements(restaurants, planId)
-    var url = "https://35dc912e.ngrok.io/restaurants/"+planId
+    var url = ENV.BASE_URL+"restaurants/"+planId
     return { 
       "attachment": {
         "type": "template",

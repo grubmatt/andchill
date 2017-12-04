@@ -1,5 +1,6 @@
 const db = require('../db/db.js').db;
 const Plan = require('../db/db.js').Plan;
+const Yelp = require('../apis/yelp.js');
 
 var create = function(ownerId, lat, lng, callBack) {
 	var plan = new Plan({
@@ -14,6 +15,7 @@ var create = function(ownerId, lat, lng, callBack) {
 			console.log(err)
 		} else {
 			console.log("Success")
+			Yelp.makeYelpCall(plan._id, lat, lng);
 			callBack(plan)
 		}
 	})
