@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/webhook', (req, res) => {
-  const VERIFY_TOKEN = ENV.VERIFY_TOKEN
+  const VERIFY_TOKEN = process.env.VERIFY_TOKEN
   // Parse params from the webhook verification request
   let mode = req.query['hub.mode'];
   let token = req.query['hub.verify_token'];

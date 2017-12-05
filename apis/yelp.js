@@ -14,7 +14,7 @@ var yelp = {
         url: req_url,
         method: "GET",
         "auth": {
-          "bearer": ENV.YELP_ACCESS_KEY
+          "bearer": process.env.YELP_ACCESS_KEY
         }
       }, (err, res, body) => {
         if (!err) {
@@ -48,7 +48,7 @@ var yelp = {
         url: req_url,
         method: "GET",
         "auth": {
-          "bearer": ENV.YELP_ACCESS_KEY
+          "bearer": process.env.YELP_ACCESS_KEY
         }
       }, (err, res, body) => {
         if (!err) {
@@ -71,7 +71,7 @@ var yelp = {
   },
   generateEventListTemplate: function(restaurants, planId) {
     var elements = this.generateElements(restaurants, planId)
-    var url = ENV.BASE_URL+"restaurants/"+planId
+    var url = process.env.BASE_URL+"restaurants/"+planId
     return { 
       "attachment": {
         "type": "template",
