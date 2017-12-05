@@ -58,7 +58,7 @@ function setUpPlaces(position) {
   placesAutocomplete.on('change', handleChange);
 }
 
-function createPlan() {
+function createPlan(BASE_URL) {
   console.log()
   if($('#address-input').val() == "Current Location") {
     lat = curLat
