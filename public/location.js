@@ -7,7 +7,6 @@ var placesAutocomplete;
 
 
 $( document ).ready(function() {
-
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(setUpPlaces);
         } else {
@@ -45,9 +44,6 @@ $( document ).ready(function() {
           }
         );
       };
-
-      
-
  });
 
 
@@ -69,12 +65,11 @@ function createPlan() {
     lng = curLng
   }
   $.ajax({
-        url: 'new/plan/'+ownerId+"/"+lat+"/"+lng,
+        url: '/new/plan/'+ownerId+"/"+lat+"/"+lng,
         type: 'PUT',
         success: function(result) {
           console.log(result)
           beginShare(result._id)
-            // $("#result").html(JSON.stringify(result))
           }
       });
 }
