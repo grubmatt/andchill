@@ -46,7 +46,7 @@ function createResponse(id) {
               {
                 "type": "web_url",
                 "title": "Share",
-                "url": process.env.BASE_URL+"/"+id,
+                "url": process.env.BASE_URL+"/plan/"+id,
                 "webview_height_ratio": 'tall',
                 "messenger_extensions": true
               }
