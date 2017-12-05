@@ -1,6 +1,5 @@
 //API Ref: https://www.yelp.com/developers/documentation/v3/
 const request = require('request');
-const ENV = require('../env.js')
 const Event = require('../models/event.js')
 
 var yelp = {

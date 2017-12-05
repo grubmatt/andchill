@@ -2,8 +2,6 @@ const facebook = require('./apis/facebook.js');
 const ticketmaster = require('./apis/ticketmaster.js');
 const yelp = require('./apis/yelp.js');
 const Plan = require('./models/plan.js');
-const ENV = require('./env.js');
-
 
 module.exports.handleMessage = function(sender_psid, received_message) {
   if (received_message.text) {
