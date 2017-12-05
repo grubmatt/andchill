@@ -4,7 +4,7 @@ var curLat = 0;
 var curLng = 0;
 var ownerId = 0;
 var placesAutocomplete;
-
+var BASE_URL;
 
 $( document ).ready(function() {
         if (navigator.geolocation) {
@@ -69,7 +69,7 @@ function createPlan() {
         type: 'PUT',
         success: function(result) {
           console.log(result)
-          beginShare(result._id)
+          beginShare(result._id, BASE_URL)
           }
       });
 }
@@ -80,7 +80,7 @@ function handleChange(e) {
   lng = e.suggestion.latlng.lng
 }
 
-function beginShare(id){
+function beginShare(id, BASE_URL){
         var message = {
           attachment: {
             type: 'template',
@@ -91,14 +91,14 @@ function beginShare(id){
                 subtitle: 'A shared Plan',
                 default_action: {
                   type: 'web_url',
-                  url: process.env.BASE_URL+"/plan/"+id,
+                  url: BASE_URL+"/plan/"+id,
                   messenger_extensions: true,
                 },
                 buttons: [
               {
                 "type": "web_url",
                 "title": "View Events",
-                "url": process.env.BASE_URL+"/plan/"+id,
+                "url": BASE_URL+"/plan/"+id,
                 "webview_height_ratio": 'tall',
                 "messenger_extensions": true
               }
