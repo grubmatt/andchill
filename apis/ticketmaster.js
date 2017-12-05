@@ -44,7 +44,7 @@ var ticketmaster = {
             {
               "type": "web_url",
               "title": "Refine Search",
-              "url": "https://xandchill.herokuapp.com/refine.html",
+              "url": process.env.BASE_URL+"/refine.html",
               "webview_height_ratio": "tall",
               "messenger_extensions": true
             }

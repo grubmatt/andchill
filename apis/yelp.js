@@ -119,7 +119,7 @@ var yelp = {
 };
 
 function buildUrl(elements) {
-  var url = "https://35dc912e.ngrok.io/restaurants?array="
+  var url = process.env.BASE_URL+"/restaurants?array="
   for(var i = 0; i < elements.length; i++) {
     url = url + "|" +JSON.stringify(elements[i])
   }

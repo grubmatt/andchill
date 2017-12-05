@@ -96,14 +96,14 @@ function beginShare(id){
                 subtitle: 'A shared Plan',
                 default_action: {
                   type: 'web_url',
-                  url: "https://b9cdd51b.ngrok.io/plan/"+id,
+                  url: process.env.BASE_URL+"/plan/"+id,
                   messenger_extensions: true,
                 },
                 buttons: [
               {
                 "type": "web_url",
                 "title": "View Events",
-                "url": "https://b9cdd51b.ngrok.io/plan/"+id,
+                "url": process.env.BASE_URL+"/plan/"+id,
                 "webview_height_ratio": 'tall',
                 "messenger_extensions": true
               }
