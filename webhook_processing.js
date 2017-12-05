@@ -33,7 +33,6 @@ module.exports.handleMessage = function(sender_psid, received_message) {
 }
 
 function createResponse(id) {
-
   return {
       "attachment": {
         "type": "template",
