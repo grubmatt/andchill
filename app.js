@@ -71,7 +71,7 @@ app.get('/plan/:planId', (req, res) => {
   var planId = req.params.planId
   var rests = Event.find(planId, (rests)=> {
     console.log(rests)
-    res.render('yelp', {rests: rests})
+    res.render('category', {rests: rests})
   })
 });
 
