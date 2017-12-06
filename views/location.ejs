@@ -27,9 +27,17 @@
   <!-- Push down content on small screens -->
   <div class="w3-hide-large" style="margin-top:80px"></div>
 
-  <h1> Filters </h1>
+  <center><h1> Filters </h1></center>
   <div class="w3-container">
     <div class="w3-row w3-large">
+      <div class="w3-col s12">
+        <input type="search" id="address-input" placeholder="Where are we going?" />
+      </div>
+      <div class="w3-col s12">
+        <p>
+          Date: <input type="text" id="datepicker">
+        </p>
+      </div>
       <div class="w3-col s12">
         <div class="dropdown">
           <p> Rating:
@@ -41,6 +49,8 @@
             </select>
           </p>
         </div>
+      </div>
+      <div class="w3-col s12">
         <div class="dropdown">
           <p> Budget:
             <select>
@@ -52,22 +62,11 @@
           </p>
         </div>
       </div>
-      <div class="w3-row w3-large">
-        <div class="w3-col s12">
-          <input type="search" id="address-input" placeholder="Where are we going?" />
-        </div>
-        <div class="w3-col s12">
-          <p>
-            Date: <input type="text" id="datepicker">
-          </p>
-        </div>
-        <div class="w3-col s12">
-        </div>
-      </div>
     </div>
-    <center>
-      <button id="shareBut" type="button" onclick="createPlan('<%= process.env.BASE_URL %>')" >Share</button>
-    </center>
   </div>
+  <center>
+    <button id="shareBut" type="button" onclick="createPlan('<%= process.env.BASE_URL %>')" >Share</button>
+  </center>
+</div>
 </body>
 </html>
