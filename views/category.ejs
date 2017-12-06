@@ -38,20 +38,21 @@
     </div>
   </div>
 
-  <h4><strong>Our recommendations:</strong></h4>
-  <hr>
-
-  <!-- get list of restaurants -->
-  <table>
-    <tr>
+  <center>
+    <h4><strong>Our recommendations:</strong></h4>
+    <hr>
+    <!-- get list of restaurants -->
+    <table>
+      <tr>
         <th>Name</th>
-    </tr>
-  <% for (var i = 0; i < rests.length; i++) { %>
-    <tr>
-      <td><%= rests[i].title %></td>
       </tr>
-  <% } %>
-  </table>
+      <% for (var i = 0; i < rests.length; i++) { %>
+        <tr>
+          <td><%= rests[i].title %></td>
+        </tr>
+      <% } %>
+    </table>
+  </center>
 </div>
 </body>
 </html>
