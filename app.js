@@ -82,8 +82,8 @@ app.get('/plan/:planId', (req, res) => {
   })
 });
 
-app.put('/new/plan/:ownerId/:lat/:lng/:date', (req,res) => {
-  Plan.create(req.params.ownerId, req.params.lat, req.params.lng, req.params.date, (plan) => {
+app.put('/new/plan/:ownerId/:lat/:lng/:price/:rating/:date', (req,res) => {
+  Plan.create(req.params.ownerId, req.params.lat, req.params.lng, req.params.price, req.params.rating, req.params.date, (plan) => {
     res.send(plan)
   });
 });

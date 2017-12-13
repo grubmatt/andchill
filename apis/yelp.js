@@ -4,8 +4,8 @@ const Event = require('../models/event.js')
 
 var yelp = {
 
-  makeYelpCall: function(planId, lat, lng) {
-    let params = "latitude="+lat+"&longitude="+lng+"&categories=restaurants";
+  makeYelpCall: function(planId, lat, lng, price, rating) {
+    let params = "latitude="+lat+"&longitude="+lng+"&price="+price+"&rating="+rating+"&categories=restaurants";
     let req_url = "https://api.yelp.com/v3/businesses/search?"+params;
     console.log(req_url);
 
