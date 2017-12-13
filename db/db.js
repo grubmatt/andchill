@@ -19,7 +19,9 @@ db.on('error', console.error.bind(console, 'connection error:'));
 var planSchema = mongoose.Schema({
   ownerId: String,
   lat: String,
-  lng: String,,
+  lng: String,
+  price: String,
+  rating: String,
   date: String,
   collabIds: [String]
 });
