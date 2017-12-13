@@ -20,7 +20,7 @@ var yelp = {
           var businesses = JSON.parse(body);
           if (businesses && businesses["businesses"].length > 0) {
             console.log('yelp requested!');
-            response = this.generateEventListTemplate(businesses["businesses"], planId);
+            response = this.generateEventListTemplate(businesses["businesses"], planId, category);
           } else {
             response = { "text": "Sorry we couldnt find any businesses!" };
           }
@@ -53,7 +53,7 @@ var yelp = {
           // Guards against no restaurants being returned
           if (restaurants["businesses"] && restaurants["businesses"].length > 0) {
             console.log('yelp requested!');
-            response = this.generateEventListTemplate(restaurants["businesses"], category, planId);
+            response = this.generateEventListTemplate(restaurants["businesses"], planId);
             console.log(response);
           } else {
             response = { "text": "Sorry we couldnt find any restaurants!" };
@@ -65,8 +65,8 @@ var yelp = {
       }
     );
   },
-  generateEventListTemplate: function(restaurants, category, planId) {
-    var elements = this.generateElements(restaurants, category, planId)
+  generateEventListTemplate: function(restaurants, planId, category) {
+    var elements = this.generateElements(restaurants, planId, category)
     var url = process.env.BASE_URL+"restaurants/"+planId
     return { 
       "attachment": {
@@ -88,7 +88,7 @@ var yelp = {
       }
     }
   },
-  generateElements: function (restaurants, category, planId){
+  generateElements: function (restaurants, planId, category){
     let elements = [],
         chosenRestaurants = [];
 
