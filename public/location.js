@@ -65,7 +65,7 @@ function createPlan(BASE_URL) {
     lng = curLng
   }
 
-  date = $("#datepicker").val();
+  date = encodeURIComponent($("#datepicker").val());
   $.ajax({
     url: '/new/plan/'+ownerId+"/"+lat+"/"+lng+"/"+date,
     type: 'PUT',
