@@ -2,11 +2,12 @@ const db = require('../db/db.js').db;
 const Plan = require('../db/db.js').Plan;
 const Yelp = require('../apis/yelp.js');
 
-var create = function(ownerId, lat, lng, callBack) {
+var create = function(ownerId, lat, lng, date, callBack) {
 	var plan = new Plan({
 		ownerId: ownerId,
 		lat: lat,
 		lng: lng,
+		date: date,
 		collabIds: []
 	})
 

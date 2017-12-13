@@ -64,14 +64,16 @@ function createPlan(BASE_URL) {
     lat = curLat
     lng = curLng
   }
+
+  date = $("#datepicker").val();
   $.ajax({
-        url: '/new/plan/'+ownerId+"/"+lat+"/"+lng,
-        type: 'PUT',
-        success: function(result) {
-          console.log(result)
-          beginShare(result._id, BASE_URL)
-          }
-      });
+    url: '/new/plan/'+ownerId+"/"+lat+"/"+lng+"/"+date,
+    type: 'PUT',
+    success: function(result) {
+      console.log(result)
+      beginShare(result._id, BASE_URL)
+      }
+  });
 }
 
 
