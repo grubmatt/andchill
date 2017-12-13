@@ -101,6 +101,7 @@ var yelp = {
       let restaurant = restaurants[randomRestaurantNum];
       console.log("Event: "+restaurant);
       console.log("Category: "+category);
+      console.log("Plan ID: "+planId);
 
       Event.create(restaurant, category, planId);
       elements.push({
