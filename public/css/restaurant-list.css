@@ -3,6 +3,10 @@ ul {
     padding: 0; /* To remove default left padding */
 }
 
+.product-details {
+    padding-left: 20px;
+}
+
 .product-list-vertical{
     list-style:none;
     margin: 0;
