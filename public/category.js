@@ -1,11 +1,11 @@
 $(document).ready(function(){
   $(".bars").hide();
   $("#bar-icon").click(function(){
-      $(".bars").show();
-      $(".restaurants").hide();
+    $(".bars").show();
+    $(".restaurants").hide();
   });
   $("#restaurant-icon").click(function(){
-      $(".bars").hide();
-      $(".restaurants").show();
+    $(".bars").hide();
+    $(".restaurants").show();
   })
 });
