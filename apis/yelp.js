@@ -21,7 +21,7 @@ var yelp = {
           var restaurants = JSON.parse(body);
           // console.log(restaurants);
           // Guards against no restaurants being returned
-          if (restaurants["businesses"].length > 0) {
+          if (restaurants && restaurants["businesses"].length > 0) {
             console.log('yelp requested!');
             response = this.generateEventListTemplate(restaurants["businesses"], planId);
           } else {
@@ -57,7 +57,7 @@ var yelp = {
           if (restaurants["businesses"] && restaurants["businesses"].length > 0) {
             console.log('yelp requested!');
             response = this.generateEventListTemplate(restaurants["businesses"], planId);
-            // console.log(response);
+            console.log(response);
           } else {
             response = { "text": "Sorry we couldnt find any restaurants!" };
           }
