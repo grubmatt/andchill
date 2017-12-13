@@ -95,7 +95,7 @@ var yelp = {
     let elements = [],
         chosenRestaurants = [];
 
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 10; i++) {
       let randomRestaurantNum = Math.floor(Math.random()*restaurants.length);
       while(chosenRestaurants.includes(randomRestaurantNum)){
         randomRestaurantNum = Math.floor(Math.random()*restaurants.length);

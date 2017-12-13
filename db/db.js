@@ -27,7 +27,9 @@ var eventSchema = mongoose.Schema({
 	title: String,
 	planId: Number,
 	image_url: String,
-	url: String
+	url: String,
+  price: String,
+  rating: Number
 })
 
 eventSchema.plugin(autoIncrement.plugin, 'Event');

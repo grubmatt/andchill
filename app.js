@@ -7,6 +7,13 @@ const
   webhook_processor = require('./webhook_processing.js'),
   app = express().use(body_parser.json());
 
+// Allow in-line style
+const csp = require('content-security-policy');
+const cspPolicy = {
+  "content_security_policy": "default-src 'self' style-src 'self' 'unsafe-inline';" 
+};
+const localCSP = csp.getCSP(cspPolicy);
+
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 app.set('views', __dirname + '/views');

@@ -1,0 +1,45 @@
+<!-- <head>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/restaurant-list.css">
+</head>
+ -->
+<body>
+<ul class="product-list-vertical">
+
+    <% for (var i = 0; i < rests.length; i++) { %>
+        <li>
+
+            <a href="#" class="product-photo">
+                <img src="<%= rests[i].image_url %>" style="width:100%;height:100%;cursor:pointer";>
+            </a>
+
+            <div class="product-details">
+
+                <h2><%= rests[i].title %></h2>
+<!--
+                <div class="product-rating">
+                    <div>
+                        <span class="product-stars" style="width: 60px" >
+                            <% for (var i = 0; i < rests[i].rating; i++) { %> 
+                                <i class="fa fa-star">
+                            <% } %> 
+                        </span>
+                    </div> 
+
+                   <span><a href="#">82 reviews</a></span> -->
+            </div>
+
+                <!-- <p class="product-description"> <%= rests[i].categories %></p> -->
+
+
+
+                
+
+
+        </li>
+
+    <% } %>
+        
+</ul>
+
+</body>

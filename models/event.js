@@ -6,7 +6,9 @@ var create = function(restaurant, planId) {
 		title: restaurant["name"],
 		image_url: restaurant["image_url"],
 		url: restaurant["url"],
-		planId: planId
+		planId: planId,
+    price: restaurant["price"],
+    rating: restaurant["rating"]
 	})
 
 	event.save(function(err) {
