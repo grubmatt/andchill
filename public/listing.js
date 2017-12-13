@@ -1,14 +1,11 @@
 $(document).ready(function(){
-    $('#selectedPrice').on('change', function() {
-      if ( this.value < 3)
-      {
-        $("#fancy").hide();
-        $("#cheap").show();
-      }
-      else
-      {
-        $("#cheap").hide();
-        $("#fancy").show();
-      }
-    });
+  $(".bars").hide();
+  $("#bar-icon").click(function(){
+      $(".bars").show();
+      $(".restaurants").hide();
+  });
+  $("#restaurant-icon").click(function(){
+      $(".bars").hide();
+      $(".restaurants").show();
+  })
 });
