@@ -17,10 +17,11 @@ db.on('error', console.error.bind(console, 'connection error:'));
 
 // Create Plan schema
 var planSchema = mongoose.Schema({
-ownerId: String,
-lat: String,
-lng: String,
-collabIds: [String]
+  ownerId: String,
+  lat: String,
+  lng: String,,
+  date: String,
+  collabIds: [String]
 });
 
 var eventSchema = mongoose.Schema({
