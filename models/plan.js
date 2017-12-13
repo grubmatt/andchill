@@ -18,7 +18,8 @@ var create = function(ownerId, lat, lng, price, rating, date, callBack) {
 			console.log(err)
 		} else {
 			console.log("Success")
-			Yelp.makeYelpCall(plan._id, lat, lng, price);
+			Yelp.makeYelpCall(plan._id, lat, lng, price, "restaurants");
+			Yelp.makeYelpCall(plan._id, lat, lng, price, "bars");
 			callBack(plan)
 		}
 	})

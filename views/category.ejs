@@ -30,19 +30,19 @@
   <div class="w3-row-padding w3-section">
     <div class="w3-row w3-large">
       <div class="w3-col s6">
-        <img class="category" src="/img/restaurant.jpg" id="restaurant" title="Restaurants">
+        <img class="category" src="/img/restaurant.jpg" id="restaurant-icon" title="Restaurants">
       </div>
       <div class="w3-col s6">
-        <img class="category" src="/img/sports.jpg" id="sports" title="Sports">
+        <img class="category" src="/img/sports.jpg" id="sports-icon" title="Sports">
       </div>
     </div>
     <br>
     <div class="w3-row w3-large">
       <div class="w3-col s6">
-        <img class="category" src="/img/bar.jpg" id="bars" title="Bars">
+        <img class="category" src="/img/bar.jpg" id="bar-icon" title="Bars">
       </div>
       <div class="w3-col s6">
-        <img class="category" src="/img/concert.jpg" id="concerts" title="Concerts">
+        <img class="category" src="/img/concert.jpg" id="concert-icon" title="Concerts">
       </div>
     </div>
   </div>
@@ -52,25 +52,24 @@
       <div class="w3-col s12">
         <h4><strong>Our recommendations:</strong></h4>
         <hr>
-        <div id="recommendations">
+        <div id="restaurants">
           <ul class="product-list-vertical" id="cheap">
-            <% for (var i = 0; i < restaurants.length; i+=2) { %>
-              <li>
+            <% for (var i = 0; i < events.length; i+=2) { %>
+              <li class="<% events.category %>">
                 <div class="w3-row w3-large">
                   <div class="w3-col s4">
                     <a href="#" class="product-photo">
                       <img src="<%= restaurants[i].image_url %>" style="width:100%;height:100%;cursor:pointer";>
                     </a>
                   </div>
-
                   <div class="w3-col s8">
                     <div class="product-details">
-                      <h4><%= restaurants[i].title %></h4>
+                      <h4><%= events[i].title %></h4>
                       <div class="product-rating">
                         <span class="product-stars" >
                           <% var rating; %>
-                          <% if (restaurants[i].rating) { %>
-                           <% rating = restaurants[i].rating; %>
+                          <% if (events[i].rating) { %>
+                           <% rating = events[i].rating; %>
                           <% } else {%>
                             <% rating = Math.floor(Math.random() * 4) + 1; %>
                           <% } %>

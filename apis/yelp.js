@@ -4,8 +4,8 @@ const Event = require('../models/event.js')
 
 var yelp = {
 
-  makeYelpCall: function(planId, lat, lng, price) {
-    let params = "latitude="+lat+"&longitude="+lng+"&price="+price+"&sort_by=rating&categories=restaurants";
+  makeYelpCall: function(planId, lat, lng, price, category) {
+    let params = "latitude="+lat+"&longitude="+lng+"&price="+price+"&sort_by=rating&categories="+category;
     let req_url = "https://api.yelp.com/v3/businesses/search?"+params;
     console.log(req_url);
 
@@ -56,7 +56,7 @@ var yelp = {
           // Guards against no restaurants being returned
           if (restaurants["businesses"] && restaurants["businesses"].length > 0) {
             console.log('yelp requested!');
-            response = this.generateEventListTemplate(restaurants["businesses"], planId);
+            response = this.generateEventListTemplate(restaurants["businesses"], category, planId);
             console.log(response);
           } else {
             response = { "text": "Sorry we couldnt find any restaurants!" };
@@ -68,7 +68,7 @@ var yelp = {
       }
     );
   },
-  generateEventListTemplate: function(restaurants, planId) {
+  generateEventListTemplate: function(restaurants, category, planId) {
     var elements = this.generateElements(restaurants, planId)
     var url = process.env.BASE_URL+"restaurants/"+planId
     return { 
@@ -91,7 +91,7 @@ var yelp = {
       }
     }
   },
-  generateElements: function (restaurants, planId){
+  generateElements: function (restaurants, category, planId){
     let elements = [],
         chosenRestaurants = [];
 
@@ -102,7 +102,7 @@ var yelp = {
       }
       chosenRestaurants.push(randomRestaurantNum);
       let restaurant = restaurants[randomRestaurantNum];
-      Event.create(restaurant, planId);
+      Event.create(restaurant, category, planId);
       elements.push({
         "title": restaurant["name"],
         "image_url": restaurant["image_url"],

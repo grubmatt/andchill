@@ -76,10 +76,10 @@ app.post('/webhook', (req, res) => {
 // Plan Routes
 app.get('/plan/:planId', (req, res) => {
   var planId = req.params.planId;
-  var rests = Event.find(planId, (restaurants)=> {
-    console.log(rests);
-    res.render('category', { restaurants: restaurants});
-  })
+  var rests = Event.find(planId, (events)=> {
+    console.log(events);
+    res.render('category', { events: events});
+  });
 });
 
 app.put('/new/plan/:ownerId/:lat/:lng/:price/:rating/:date', (req,res) => {
@@ -89,9 +89,9 @@ app.put('/new/plan/:ownerId/:lat/:lng/:price/:rating/:date', (req,res) => {
 });
 
 app.get('/restaurants/:planId', (req, res) => {
-  var planId = req.params.planId
-  var rests = Event.find(planId, (rests)=> {
-    console.log(rests)
-    res.render('category', {rests: rests})
+  var planId = req.params.planId;
+  var rests = Event.find(planId, (events)=> {
+    console.log(events);
+    res.render('category', { events: events});
   });
 });
