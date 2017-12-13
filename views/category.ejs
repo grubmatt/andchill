@@ -51,6 +51,7 @@
     <div class="w3-row w3-large">
       <div class="w3-col s12">
         <h4><strong>Our recommendations:</strong></h4>
+        <hr>
         <div id="recommendations">
           <ul class="product-list-vertical" id="cheap">
             <% for (var i = 0; i < restaurants.length; i+=2) { %>
@@ -67,10 +68,11 @@
                       <h4><%= restaurants[i].title %></h4>
                       <div class="product-rating">
                         <span class="product-stars" >
+                          <% var rating; %>
                           <% if (restaurants[i].rating) { %>
-                           <% let rating = restaurants[i].rating; %>
+                           <% rating = restaurants[i].rating; %>
                           <% } else {%>
-                            <% let rating = Math.floor(Math.random() * 4) + 1; %>
+                            <% rating = Math.floor(Math.random() * 4) + 1; %>
                           <% } %>
                           <% for (var j = 0; j < rating; j++) { %> 
                             <i class="fa fa-star"> </i>
