@@ -29,7 +29,7 @@
 
 
   <div class="w3-row-padding w3-section">
-    <div class="w3-row-padding w3-large">
+    <div class="w3-row w3-large">
       <div class="w3-col s6">
         <img class="demo w3-opacity w3-hover-opacity-off" src="/img/restaurant.jpg" style="width:100%;height:15%; cursor:pointer" title="Restaurants">
       </div>
@@ -37,7 +37,8 @@
         <img class="demo w3-opacity w3-hover-opacity-off" src="/img/sports.jpg" style="width:100%;height:15%; cursor:pointer" title="Sports">
       </div>
     </div>
-    <div class="w3-row-padding w3-large">
+    <br>
+    <div class="w3-row w3-large">
       <div class="w3-col s6">
         <img class="demo w3-opacity w3-hover-opacity-off" src="/img/bar.jpg" style="width:100%;height:15%; cursor:pointer" title="Bars">
       </div>
@@ -66,14 +67,9 @@
                       <h4><%= rests[i].title %></h4>
                       <div class="product-rating">
                         <span class="product-stars" >
-                        <% let fakeRating = Math.floor(Math.random() * 5); %>
+                        <% let fakeRating = Math.floor(Math.random() * 4) + 1; %>
                         <% for (var j = 0; j < fakeRating; j++) { %> 
                           <i class="fa fa-star"> </i>
-                        <% } %>
-                        </span>
-                        <span class="price" >
-                        <% for (var k = 0; k < 1; k++) { %>
-                          <i class="fa fa-usd"></i>
                         <% } %>
                         </span>
                       </div> 
