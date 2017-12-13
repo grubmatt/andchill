@@ -17,15 +17,12 @@ var yelp = {
         }
       }, (err, res, body) => {
         if (!err) {
-          console.log(body);
-          var restaurants = JSON.parse(body);
-          // console.log(restaurants);
-          // Guards against no restaurants being returned
-          if (restaurants && restaurants["businesses"].length > 0) {
+          var businesses = JSON.parse(body);
+          if (businesses && businesses["businesses"].length > 0) {
             console.log('yelp requested!');
-            response = this.generateEventListTemplate(restaurants["businesses"], planId);
+            response = this.generateEventListTemplate(businesses["businesses"], planId);
           } else {
-            response = { "text": "Sorry we couldnt find any restaurants!" };
+            response = { "text": "Sorry we couldnt find any businesses!" };
           }
         } else {
           console.error("Unable to send message:" + err);
@@ -69,7 +66,7 @@ var yelp = {
     );
   },
   generateEventListTemplate: function(restaurants, category, planId) {
-    var elements = this.generateElements(restaurants, planId)
+    var elements = this.generateElements(restaurants, category, planId)
     var url = process.env.BASE_URL+"restaurants/"+planId
     return { 
       "attachment": {
@@ -102,6 +99,9 @@ var yelp = {
       }
       chosenRestaurants.push(randomRestaurantNum);
       let restaurant = restaurants[randomRestaurantNum];
+      console.log("Event: "+restaurant);
+      console.log("Category: "+category);
+
       Event.create(restaurant, category, planId);
       elements.push({
         "title": restaurant["name"],
