@@ -13,3 +13,12 @@ h4 {
 .category:hover {
   opacity: 1;
 }
+
+#veto-button {
+  text-align: center;
+  width: 80%;
+  height: 50%;
+  border-radius: 1.5px;
+  border: 1px solid coral;
+  background-color: coral;
+}
