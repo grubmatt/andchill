@@ -49,6 +49,7 @@ var ticketmaster = {
         };
 
       Event.create(event, category, planId);
+    }
   },
   createEventList: function(facebook, sender_psid, message) {
     lat = message.attachments[0].payload.coordinates.lat;
