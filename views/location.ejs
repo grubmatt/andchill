@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/css/category.css">
 
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -38,11 +39,11 @@
       </div>
       <div class="w3-col s12">
         <div class="filter">
-          <p> Date: <input type="text" id="datepicker"></p>
+          <p class="datePicker"> Date: <input type="text" id="datepicker"></p>
         </div>
       </div>
-      <div class="w3-col s7 pull-right">
-        <div class="dropdown">
+      <div class="w3-col s12">
+        <div class="dropdown filterDrop">
             <select id="selectedRating">
               <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
               <option value="4"> &#9733;&#9733;&#9733;&#9733;&#9734;</option>
@@ -52,8 +53,8 @@
           </p>
         </div>
       </div>
-      <div class="w3-col s5 pull-left">
-        <div class="dropdown">
+      <div class="w3-col s12">
+        <div class="dropdown filterDrop">
             <select id="selectedPrice">
               <option value="1">$</option>
               <option value="2">$$</option>
