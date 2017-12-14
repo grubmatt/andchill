@@ -21,8 +21,8 @@ var create = function(ownerId, lat, lng, price, rating, date, callBack) {
 			console.log("Success")
 			Yelp.makeYelpCall(plan._id, lat, lng, price, "restaurants");
 			Yelp.makeYelpCall(plan._id, lat, lng, price, "bars");
-			TM.makeTMCall(plan._id, lat, lng, price, "sports");
-			TM.makeTMCall(plan._id, lat, lng, price, "concert");
+			//TM.makeTMCall(plan._id, lat, lng, price, "sports");
+			//TM.makeTMCall(plan._id, lat, lng, price, "concert");
 			callBack(plan)
 		}
 	})
