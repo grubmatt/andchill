@@ -1,5 +1,4 @@
 'use strict';
-const ENV = require('./env.js');
 const Plan = require('./models/plan.js');
 const Event = require('./models/event.js');
 const 
@@ -8,12 +7,45 @@ const
   webhook_processor = require('./webhook_processing.js'),
   app = express().use(body_parser.json());
 
+// Allow in-line style
+const csp = require('content-security-policy');
+const cspPolicy = {
+  "content_security_policy": "default-src 'self' style-src 'self' 'unsafe-inline';" 
+};
+const localCSP = csp.getCSP(cspPolicy);
+
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 app.set('views', __dirname + '/views');
 // Define the view (templating) engine
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
+
+// Index
+app.get('/', (req, res) => {
+  res.render('location')
+});
+
+// Webhook Routes
+app.get('/webhook', (req, res) => {
+  const VERIFY_TOKEN = process.env.VERIFY_TOKEN
+  // Parse params from the webhook verification request
+  let mode = req.query['hub.mode'];
+  let token = req.query['hub.verify_token'];
+  let challenge = req.query['hub.challenge'];
+  // Check if a token and mode were sent
+  if (mode && token) {
+    // Check the mode and token sent are correct
+    if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+      // Respond with 200 OK and challenge token from the request
+      console.log('WEBHOOK_VERIFIED');
+      res.status(200).send(challenge);
+    } else {
+      // Responds with '403 Forbidden' if verify tokens do not match
+      res.sendStatus(403);
+    }
+  }
+});
 
 app.post('/webhook', (req, res) => {  
   let body = req.body;
@@ -41,48 +73,25 @@ app.post('/webhook', (req, res) => {
   }
 });
 
-app.get('/', (req, res) => {
-  res.render('location')
-});
-
-app.get('/webhook', (req, res) => {
-  const VERIFY_TOKEN = ENV.VERIFY_TOKEN
-  // Parse params from the webhook verification request
-  let mode = req.query['hub.mode'];
-  let token = req.query['hub.verify_token'];
-  let challenge = req.query['hub.challenge'];
-  // Check if a token and mode were sent
-  if (mode && token) {
-    // Check the mode and token sent are correct
-    if (mode === 'subscribe' && token === VERIFY_TOKEN) {
-      // Respond with 200 OK and challenge token from the request
-      console.log('WEBHOOK_VERIFIED');
-      res.status(200).send(challenge);
-    } else {
-      // Responds with '403 Forbidden' if verify tokens do not match
-      res.sendStatus(403);      
-    }
-  }
-});
-
-app.put('/new/plan/:ownerId/:lat/:lng', (req,res) => {
-  Plan.create(req.params.ownerId, req.params.lat, req.params.lng, (plan) => {
-    res.send(plan)
-  });
-})
-
+// Plan Routes
 app.get('/plan/:planId', (req, res) => {
-  var planId = req.params.planId
-  var rests = Event.find(planId, (rests)=> {
-      console.log(rests)
-      res.render('yelp', {rests: rests})
-  })
+  var planId = req.params.planId;
+  var rests = Event.find(planId, (events)=> {
+    console.log(events);
+    res.render('category', { events: events});
+  });
+});
+
+app.put('/new/plan/:ownerId/:lat/:lng/:price/:rating/:date', (req,res) => {
+  Plan.create(req.params.ownerId, req.params.lat, req.params.lng, req.params.price, req.params.rating, req.params.date, (plan) => {
+    res.send(plan);
+  });
 });
 
 app.get('/restaurants/:planId', (req, res) => {
-  var planId = req.params.planId
-  var rests = Event.find(planId, (rests)=> {
-      console.log(rests)
-      res.render('yelp', {rests: rests})
-  })
-})
+  var planId = req.params.planId;
+  var rests = Event.find(planId, (events)=> {
+    console.log(events);
+    res.render('category', { events: events});
+  });
+});

@@ -1,26 +1,76 @@
 <html>
-  <head>
-    <title>Add a Location</title>
-  </head>
-  <body>
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/places.js@1.4.15"></script>
-      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<head>
+  <title>AndChill</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/category.css">
 
-    <script src="location.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/places.js@1.4.15"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="/location.js"></script>
+</head>
 
-    <h1> When and Where </h1>
-    <div>
-      <input type="search" id="address-input" placeholder="Where are we going?" />
+<body class="w3-content w3-border-left w3-border-right">
 
-      <p>Date: <input type="text" id="datepicker"></p>
+<!-- Top menu -->
+<header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
+  <span class="w3-bar-item">AndChill</span>
+</header>
 
-      <button id="shareBut" type="button" onclick="createPlan()" >Share</button>
+<!-- !PAGE CONTENT! -->
+<div class="w3-main w3-white" style="margin-left:260px">
 
-      <div id="result"><div>
+  <!-- Push down content on small screens -->
+  <div class="w3-hide-large" style="margin-top:80px"></div>
 
+  <center><h2> Filters </h2></center>
+  <hr>
+  <div class="w3-container">
+    <div class="w3-row w3-large">
+      <div class="w3-col s12">
+        <div class="filter">
+          <p><input type="search" id="address-input" placeholder="Where are we going?"/></p>
+        </div>
+      </div>
+      <div class="w3-col s12">
+        <div class="filter">
+          <p> Date: <input type="text" id="datepicker"></p>
+        </div>
+      </div>
+      <div class="w3-col s7 pull-right">
+        <div class="dropdown">
+            <select id="selectedRating">
+              <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+              <option value="4"> &#9733;&#9733;&#9733;&#9733;&#9734;</option>
+              <option value="3"> &#9733;&#9733;&#9733;&#9734;&#9734;</option>
+              <option value="2"> &#9733;&#9733;&#9734;&#9734;&#9734;</option>
+            </select>
+          </p>
+        </div>
+      </div>
+      <div class="w3-col s5 pull-left">
+        <div class="dropdown">
+            <select id="selectedPrice">
+              <option value="1">$</option>
+              <option value="2">$$</option>
+              <option value="3">$$$</option>
+              <option value="4">$$$$</option>
+            </select>
+          </p>
+        </div>
+      </div>
+      <div class="w3-col s12">
+        <br>
+        <center>
+          <button class="w3-button w3-black" id="shareBut" type="button" onclick="createPlan('<%= process.env.BASE_URL %>')" >Share</button>
+        </center>
+      </div>
     </div>
-
-
-  </body>
+  </div>
+</div>
+</body>
 </html>

@@ -1,0 +1,106 @@
+<html>
+<head>
+  <title>AndChill</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/category.css">
+  <link rel="stylesheet" href="/css/restaurant-list.css">
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/places.js@1.4.15"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="/js/category.js"></script>
+</head>
+
+<body class="w3-content w3-border-left w3-border-right">
+
+<!-- Top menu -->
+<header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
+  <span class="w3-bar-item">AndChill</span>
+</header>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main w3-white">
+
+  <!-- Push down content on small screens -->
+  <div class="w3-hide-large" style="margin-top:80px"></div>
+
+  <div class="w3-row-padding w3-section">
+    <div class="w3-row w3-large">
+      <div class="w3-col s6">
+        <img class="category" src="/img/restaurant.jpg" id="restaurant-icon" title="Restaurants">
+      </div>
+      <div class="w3-col s6">
+        <img class="category" src="/img/sports.jpg" id="sports-icon" title="Sports">
+      </div>
+    </div>
+    <br>
+    <div class="w3-row w3-large">
+      <div class="w3-col s6">
+        <img class="category" src="/img/bar.jpg" id="bar-icon" title="Bars">
+      </div>
+      <div class="w3-col s6">
+        <img class="category" src="/img/concert.jpg" id="concert-icon" title="Concerts">
+      </div>
+    </div>
+  </div>
+
+  <div class="w3-container">
+    <div class="w3-row w3-large">
+      <div class="w3-col s12">
+        <h4><strong>Our recommendations:</strong></h4>
+        <hr>
+        <div id="restaurants">
+          <ul class="product-list-vertical" id="cheap">
+            <% for (var i = 0; i < events.length; i+=2) { %>
+              <li class="<%= events[i].category %>" id="<%= events[i]._id %>">
+                <div class="w3-row w3-large">
+                  <div class="w3-col s4">
+                    <a href="#" class="product-photo">
+                      <img src="<%= events[i].image_url %>" style="width:100%;height:100%;cursor:pointer";>
+                    </a>
+                  </div>
+                  <div class="w3-col s8">
+                    <div class="product-details">
+                      <div class="event-title">
+                        <h4><%= events[i].title %></h4>
+                      </div>
+                      <div class="w3-row w3-large">
+                        <div class="w3-col s8">
+                          <div class="product-rating">
+                            <span class="product-stars" >
+                              <% var rating; %>
+                              <% if (events[i].rating) { %>
+                               <% rating = events[i].rating; %>
+                              <% } else {%>
+                                <% rating = Math.floor(Math.random() * 4) + 1; %>
+                              <% } %>
+                              <% for (var j = 0; j < rating; j++) { %> 
+                                <i class="fa fa-star"> </i>
+                              <% } %>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="w3-col s4">
+                          <div class="veto">
+                            <button value="<%= events[i]._id %>" class="veto-button">Veto</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            <% } %>           
+          </ul>
+        </div>
+      </div>
+    </div>  
+  </div>
+</div>  
+    
+</body>
+</html>

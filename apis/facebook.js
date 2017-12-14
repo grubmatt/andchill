@@ -1,5 +1,4 @@
 const request = require('request');
-const ENV = require('../env.js');
 
 var facebook = {
   callSendAPI: function(sender_psid, response) {
@@ -14,9 +13,9 @@ var facebook = {
     // Send the HTTP request to the Messenger Platform
     request({
       "uri": "https://graph.facebook.com/v2.6/me/messages",
-      "qs": { "access_token": ENV.PAGE_ACCESS_TOKEN,
+      "qs": { "access_token": process.env.PAGE_ACCESS_TOKEN,
               "whitelisted_domains":[
-                "https://xandchill.herokuapp.com"
+                process.env.BASE_URL
               ]
             },
       "method": "POST",

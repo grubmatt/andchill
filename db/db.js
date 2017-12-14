@@ -17,17 +17,23 @@ db.on('error', console.error.bind(console, 'connection error:'));
 
 // Create Plan schema
 var planSchema = mongoose.Schema({
-ownerId: String,
-lat: String,
-lng: String,
-collabIds: [String]
+  ownerId: String,
+  lat: String,
+  lng: String,
+  price: String,
+  rating: String,
+  date: String,
+  collabIds: [String]
 });
 
 var eventSchema = mongoose.Schema({
 	title: String,
 	planId: Number,
 	image_url: String,
-	url: String
+	url: String,
+  price: String,
+  rating: Number,
+  category: String
 })
 
 eventSchema.plugin(autoIncrement.plugin, 'Event');

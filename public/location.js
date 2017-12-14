@@ -4,10 +4,9 @@ var curLat = 0;
 var curLng = 0;
 var ownerId = 0;
 var placesAutocomplete;
-
+var BASE_URL;
 
 $( document ).ready(function() {
-
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(setUpPlaces);
         } else {
@@ -45,9 +44,6 @@ $( document ).ready(function() {
           }
         );
       };
-
-      
-
  });
 
 
@@ -62,21 +58,25 @@ function setUpPlaces(position) {
   placesAutocomplete.on('change', handleChange);
 }
 
-function createPlan() {
+function createPlan(BASE_URL) {
   console.log()
   if($('#address-input').val() == "Current Location") {
     lat = curLat
     lng = curLng
   }
+
+  let date = encodeURIComponent($("#datepicker").val());
+  let rating = $("#selectedRating").val();
+  let price = $("#selectedPrice").val();
+
   $.ajax({
-        url: 'new/plan/'+ownerId+"/"+lat+"/"+lng,
-        type: 'PUT',
-        success: function(result) {
-          console.log(result)
-          beginShare(result._id)
-            // $("#result").html(JSON.stringify(result))
-          }
-      });
+    url: '/new/plan/'+ownerId+"/"+lat+"/"+lng+"/"+price+"/"+rating+"/"+date,
+    type: 'PUT',
+    success: function(result) {
+      console.log(result)
+      beginShare(result._id, BASE_URL)
+      }
+  });
 }
 
 
@@ -85,7 +85,7 @@ function handleChange(e) {
   lng = e.suggestion.latlng.lng
 }
 
-function beginShare(id){
+function beginShare(id, BASE_URL){
         var message = {
           attachment: {
             type: 'template',
@@ -96,14 +96,14 @@ function beginShare(id){
                 subtitle: 'A shared Plan',
                 default_action: {
                   type: 'web_url',
-                  url: "https://b9cdd51b.ngrok.io/plan/"+id,
+                  url: BASE_URL+"/plan/"+id,
                   messenger_extensions: true,
                 },
                 buttons: [
               {
                 "type": "web_url",
                 "title": "View Events",
-                "url": "https://b9cdd51b.ngrok.io/plan/"+id,
+                "url": BASE_URL+"/plan/"+id,
                 "webview_height_ratio": 'tall',
                 "messenger_extensions": true
               }

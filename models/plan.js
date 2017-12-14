@@ -1,12 +1,16 @@
 const db = require('../db/db.js').db;
 const Plan = require('../db/db.js').Plan;
 const Yelp = require('../apis/yelp.js');
+const TM = require('../apis/ticketmaster.js');
 
-var create = function(ownerId, lat, lng, callBack) {
+var create = function(ownerId, lat, lng, price, rating, date, callBack) {
 	var plan = new Plan({
 		ownerId: ownerId,
 		lat: lat,
-		lng: lng,
+		lng: lng,		
+		price: price,
+		rating: rating, 
+		date: date,
 		collabIds: []
 	})
 
@@ -15,7 +19,10 @@ var create = function(ownerId, lat, lng, callBack) {
 			console.log(err)
 		} else {
 			console.log("Success")
-			Yelp.makeYelpCall(plan._id, lat, lng);
+			Yelp.makeYelpCall(plan._id, lat, lng, price, "restaurants");
+			Yelp.makeYelpCall(plan._id, lat, lng, price, "bars");
+			//TM.makeTMCall(plan._id, lat, lng, price, "sports");
+			//TM.makeTMCall(plan._id, lat, lng, price, "concert");
 			callBack(plan)
 		}
 	})

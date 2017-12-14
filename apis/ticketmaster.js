@@ -1,8 +1,54 @@
 // API Ref: https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/
 // https://developer.ticketmaster.com/api-explorer/v2/
 const request = require('request');
+const Event = require('../models/event.js')
 
 var ticketmaster = {
+  makeTMCall: function(planId, lat, lng, price, category) {
+    let params = "radius=25&units=miles&latlong="+lat+","+lng+"&keyword="+category+"&apikey="+process.env.TICKETMASTER_APIKEY;
+    let req_url = "https://app.ticketmaster.com/discovery/v2/events.json?"+params;
+    console.log(req_url);
+
+    request({
+        url: req_url,
+        method: "GET"
+      }, (err, res, body) => {
+        if (!err) {
+          var events = JSON.parse(body);
+          // Guards against no events being returned
+          if (events["_embedded"] && events["_embedded"]["events"].length > 0) {
+            console.log('ticketmaster requested!');
+            this.generateEvents(events["_embedded"]["events"], planId, category);
+          } else {
+          }
+        } else {
+          console.log("Unable to send message:" + err);
+        }
+      }
+    );
+  },
+  generateEvents: function(events,  planId, category) {
+    let chosenEvents = [];
+
+    for (var i = 0; i < 4; i++) {
+      let randomEventNum = Math.floor(Math.random()*events.length);
+      while(chosenEvents.includes(randomEventNum)){
+        randomEventNum = Math.floor(Math.random()*events.length);
+      }
+      chosenEvents.push(randomEventNum);
+      let event = events[randomEventNum];
+      let event_json = {
+          title: event["name"],
+          image_url: event["images"][0]["url"],
+          url: event["url"],
+          planId: planId,
+          price: event["priceRanges"],
+          category: category 
+        };
+
+      Event.create(event, category, planId);
+    }
+  },
   createEventList: function(facebook, sender_psid, message) {
     lat = message.attachments[0].payload.coordinates.lat;
     lng = message.attachments[0].payload.coordinates.long;
@@ -44,7 +90,7 @@ var ticketmaster = {
             {
               "type": "web_url",
               "title": "Refine Search",
-              "url": "https://xandchill.herokuapp.com/refine.html",
+              "url": process.env.BASE_URL+"/refine.html",
               "webview_height_ratio": "tall",
               "messenger_extensions": true
             }
