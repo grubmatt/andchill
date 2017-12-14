@@ -1,6 +1,7 @@
 // API Ref: https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/
 // https://developer.ticketmaster.com/api-explorer/v2/
 const request = require('request');
+const Event = require('../models/event.js')
 
 var ticketmaster = {
   makeTMCall: function(planId, lat, lng, price, category) {
