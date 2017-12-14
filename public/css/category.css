@@ -19,7 +19,7 @@ h4 {
   width: 45px;
   height: 25px;
   border-radius: 3px;
-  border-right: 1px solid crimson;
-  border-bottom: 1px solid crimson;
-  background-color: darkgrey;
+  border-right: 1px solid darkgrey;
+  border-bottom: 1px solid darkgrey;
+  background-color: crimson;
 }
