@@ -4,7 +4,7 @@ const request = require('request');
 
 var ticketmaster = {
   makeTMCall: function(planId, lat, lng, price, category) {
-    let params = "radius=25&units=miles&latlong="+lat+","+lng+"&apikey="+process.env.TICKETMASTER_APIKEY;
+    let params = "radius=25&units=miles&latlong="+lat+","+lng+"&keyword="+category+"&apikey="+process.env.TICKETMASTER_APIKEY;
     let req_url = "https://app.ticketmaster.com/discovery/v2/events.json?"+params;
     console.log(req_url);
 
@@ -17,14 +17,11 @@ var ticketmaster = {
           // Guards against no events being returned
           if (events["_embedded"] && events["_embedded"]["events"].length > 0) {
             console.log('ticketmaster requested!');
-            response = this.generateEvents(events["_embedded"]["events"], planId, category);
-            console.log(response);
+            this.generateEvents(events["_embedded"]["events"], planId, category);
           } else {
-            response = { "text": "Sorry we couldnt find any events" };
           }
-          facebook.callSendAPI(sender_psid, response);
         } else {
-          console.error("Unable to send message:" + err);
+          console.log("Unable to send message:" + err);
         }
       }
     );
