@@ -64,24 +64,30 @@
                     </a>
                   </div>
                   <div class="w3-col s8">
-                    <div class="product-details">
-                      <h4><%= events[i].title %></h4>
-                      <div class="product-rating">
-                        <span class="product-stars" >
-                          <% var rating; %>
-                          <% if (events[i].rating) { %>
-                           <% rating = events[i].rating; %>
-                          <% } else {%>
-                            <% rating = Math.floor(Math.random() * 4) + 1; %>
-                          <% } %>
-                          <% for (var j = 0; j < rating; j++) { %> 
-                            <i class="fa fa-star"> </i>
-                          <% } %>
-                        </span>
-                      </div> 
-                    </div>
-                    <div class="veto">
-                      <button id="veto-button">Veto</button>
+                    <div class="w3-row w3-large">
+                      <div class="w3-col s8">
+                        <div class="product-details">
+                          <h4><%= events[i].title %></h4>
+                          <div class="product-rating">
+                            <span class="product-stars" >
+                              <% var rating; %>
+                              <% if (events[i].rating) { %>
+                               <% rating = events[i].rating; %>
+                              <% } else {%>
+                                <% rating = Math.floor(Math.random() * 4) + 1; %>
+                              <% } %>
+                              <% for (var j = 0; j < rating; j++) { %> 
+                                <i class="fa fa-star"> </i>
+                              <% } %>
+                            </span>
+                          </div> 
+                        </div>
+                      </div>
+                      <div class="w3-col s4">
+                        <div class="veto">
+                          <button id="veto-button">Veto</button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
