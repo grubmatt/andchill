@@ -1,16 +1,8 @@
 const db = require('../db/db.js').db;
 const Event = require('../db/db.js').Event;
 
-var create = function(restaurant, category, planId) {
-	var event = new Event({
-		title: restaurant["name"],
-		image_url: restaurant["image_url"],
-		url: restaurant["url"],
-		planId: planId,
-    price: restaurant["price"],
-    rating: restaurant["rating"],
-    category: category 
-	})
+var create = function(event) {
+	var event = new Event(event);
 
 	event.save(function(err) {
 		if (err) {

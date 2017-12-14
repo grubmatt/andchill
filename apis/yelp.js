@@ -99,8 +99,17 @@ var yelp = {
       }
       chosenRestaurants.push(randomRestaurantNum);
       let restaurant = restaurants[randomRestaurantNum];
-      
-      Event.create(restaurant, category, planId);
+      let restaurant_json = {
+          title: restaurant["name"],
+          image_url: restaurant["image_url"],
+          url: restaurant["url"],
+          planId: planId,
+          price: restaurant["price"],
+          rating: restaurant["rating"],
+          category: category 
+        };
+
+      Event.create(restaurant_json);
       elements.push({
         "title": restaurant["name"],
         "image_url": restaurant["image_url"],
