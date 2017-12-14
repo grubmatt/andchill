@@ -16,9 +16,9 @@ h4 {
 
 #veto-button {
   text-align: center;
-  width: 80%;
-  height: 50px;
-  border-radius: 1.5px;
+  width: 45px;
+  height: 25px;
+  border-radius: 3px;
   border-right: 1px solid crimson;
   border-bottom: 1px solid crimson;
   background-color: darkgrey;
