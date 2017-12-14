@@ -9,7 +9,8 @@ $(document).ready(function(){
     $(".restaurants").show();
   });
   $(".veto-button").click(function(){
-    let eventId = $(this).val();
-    $("#"+eventId).remove();
+    let eventId = "#"+$(this).val();
+    console.log(eventId)
+    $(eventId).remove();
   })
 });
