@@ -4,7 +4,7 @@ var curLat = 0;
 var curLng = 0;
 var ownerId = 0;
 var placesAutocomplete;
-var BASE_URL;
+var BASE_URL = "https://23e49473.ngrok.io/";
 
 $( document ).ready(function() {
         if (navigator.geolocation) {
@@ -20,6 +20,7 @@ $( document ).ready(function() {
 
        $( function() {
           $( "#datepicker" ).datepicker();
+          $( "#datepicker" ).datepicker("setDate" , new Date());
         } );
 
       (function(d, s, id){
@@ -92,7 +93,7 @@ function beginShare(id, BASE_URL){
             payload: {
               template_type: 'generic',
               elements: [{
-                title: "title",
+                title: "Your Plan",
                 subtitle: 'A shared Plan',
                 default_action: {
                   type: 'web_url',
@@ -118,7 +119,8 @@ function beginShare(id, BASE_URL){
           if(share_response.is_sent){
             // The user actually did share. 
             // Perhaps close the window w/ requestCloseBrowser().
-            console.log("hjasdfasdf")
+            MessengerExtensions.requestCloseBrowser();
+
           }
         }, 
         function(errorCode, errorMessage) {      
