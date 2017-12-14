@@ -7,5 +7,9 @@ $(document).ready(function(){
   $("#restaurant-icon").click(function(){
     $(".bars").hide();
     $(".restaurants").show();
+  });
+  $(".veto-button").click(function(){
+    let eventId = $(this).val();
+    $("#"+eventId).remove();
   })
 });
