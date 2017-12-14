@@ -137,11 +137,6 @@ ul {
         margin-right: auto;
     }
 
-    .product-list-vertical .product-photo{
-        float:none;
-        margin: 0 0 10px 0;
-    }
-
     .product-list-vertical .product-details{
         display: inline-block;
     }
