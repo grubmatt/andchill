@@ -23,5 +23,10 @@ var find = function(id, callback) {
 	})
 }
 
+var remove = function(id, callback) {
+	Event.find({ "_id" :id }).remove( callback() );
+}
+
 module.exports.create = create
 module.exports.find = find
+module.exports.delete = remove

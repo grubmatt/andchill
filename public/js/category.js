@@ -11,6 +11,14 @@ $(document).ready(function(){
   $(".veto-button").click(function(){
     let eventId = "#"+$(this).val();
     console.log(eventId)
-    $(eventId).remove();
+    $.ajax({
+    type: "POST",
+    url: "/event/"+$(this).val(),
+    success: function(doc)
+      {
+          $(eventId).remove();
+          location.reload();
+       }
+     });
   })
 });

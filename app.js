@@ -1,6 +1,7 @@
 'use strict';
 const Plan = require('./models/plan.js');
 const Event = require('./models/event.js');
+// const ENV = require('./env.js')
 const 
   express = require('express'),
   body_parser = require('body-parser'),
@@ -81,6 +82,13 @@ app.get('/plan/:planId', (req, res) => {
     res.render('category', { events: events});
   });
 });
+
+app.post('/event/:id', (req, res) => {
+  Event.delete(req.params.id, () => {
+    console.log("deleted");
+    res.send(202);
+  })
+})
 
 app.put('/new/plan/:ownerId/:lat/:lng/:price/:rating/:date', (req,res) => {
   Plan.create(req.params.ownerId, req.params.lat, req.params.lng, req.params.price, req.params.rating, req.params.date, (plan) => {
